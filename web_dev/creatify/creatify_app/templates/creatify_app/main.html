@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang = "en">
-<head>
+{% extends 'creatify_app/base.html' %}
+{% block title %}Creatify{% endblock %}
+
+{% block styles %}
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'creatify_app/style.css' %}">
-  <title>Creatify</title>
-</head>
-<body>
-  <h2>Genere Selector</h2>
-  <div id="genre-list"></div>
+  {% endblock %}
+{% block content %}
+<button type="button" class="collapsible"><h2>Genere Selector</h2></button>
+<div class="content">
   <table>
     <tr>
       {% for genre in genres %}
@@ -18,35 +18,17 @@
       {% endfor %}
     </tr>
   </table>
-  
-	<h2>Danceability Rating Slider</h2>
-    <br>
-    <br>
-    <div class="toggle-border">
-        <input id="toggleButton" type="checkbox">
-        <label for="toggleButton">
-          <div class="handle"></div>
-        </label>
-      </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="slider-wrapper disabled">
-		<div class="slider-titles">
+</div>
+{% for slider in sliders%}
+	<h3>{{slider}} Rating Slider</h3>
+    <div class="slider-wrapper">
 			<span class="low">Low</span>
 			<span class="medium">Medium</span>
-			<span class="high">High</span>
-		</div>
+			<span class="high">High</span><br>
 		<input type="range" min="1" max="3" value="2" class="slider" id="danceabilitySlider">
-        <div id="undertext">These songs will have the average danceability rating in this genre. Removes all outliers</div>
 	</div>
-
-
-
-	<button onclick="saveSliderValue()">Submit</button>
+{% endfor %}
   <script src="{% static 'creatify_app/main.js' %}"></script>
 
-</body>
+  {% endblock %}
 
-</html>
