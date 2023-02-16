@@ -134,6 +134,7 @@ db.sqlite3
 migrations
 
 .vscode
+
 #victoria git ignores
 *data/
 *credentials.py
