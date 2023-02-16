@@ -6,7 +6,7 @@ NLP
 ------------
 DESCRIPTION OF THE NLP DONE
 
-Many thanks to Ethan Fast's <i>Emptah</i> client (https://github.com/Ejhfast/empath-client) for making this possible.
+Many thanks to Ethan Fast's <i>Empath</i> client (https://github.com/Ejhfast/empath-client) for making this possible.
 
 
 Project Organization
