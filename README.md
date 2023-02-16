@@ -4,10 +4,9 @@ This project creates the website Creatify which goal is to create new playlists 
 
 NLP
 ------------
+DESCRIPTION OF THE NLP DONE
 
-
-<b>Citations</b>
-<i>Warriner, A.B., Kuperman, V., & Brysbaert, M. (2013). Norms of valence, arousal, and dominance for 13,915 English lemmas. Behavior Research Methods, 45, 1191-1207.</i>
+Many thanks to Ethan Fast's <i>Emptah</i> client (https://github.com/Ejhfast/empath-client) for making this possible.
 
 
 Project Organization
