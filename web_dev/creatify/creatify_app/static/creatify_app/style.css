@@ -60,8 +60,8 @@ body{
   }
 h3 {
     font-size: xx-large;
-    text-shadow: 2px 2px 4px lime;
-}
+    color: lime;
+  }
 .slider-wrapper > * {
     width: 75%;
 }

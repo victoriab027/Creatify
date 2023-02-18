@@ -8,10 +8,11 @@
 {% block content %}
 <button type="button" class="collapsible"><h2>Genere Selector</h2></button>
 <div class="content">
-  <table>
+  <input type="text" id="genre-filter" placeholder="Enter a genre">
+  <table id ="genre-table">
     <tr>
       {% for genre in genres %}
-        <td><button class="unclicked" onclick='toggleButtonClass(this)'>{{ genre }}</button></td>
+        <td><button class="unclicked" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'>{{ genre }}</button></td>
         {% if forloop.counter|divisibleby:13 %}
           </tr><tr>
         {% endif %}
@@ -28,6 +29,7 @@
 		<input type="range" min="1" max="3" value="2" class="slider" id="danceabilitySlider">
 	</div>
 {% endfor %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{% static 'creatify_app/main.js' %}"></script>
 
   {% endblock %}
