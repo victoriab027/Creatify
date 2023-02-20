@@ -20,15 +20,25 @@
     </tr>
   </table>
 </div>
-{% for slider in sliders%}
-	<h3>{{slider}} Rating Slider</h3>
-    <div class="slider-wrapper">
-			<span class="low">Low</span>
-			<span class="medium">Medium</span>
-			<span class="high">High</span><br>
-		<input type="range" min="1" max="3" value="2" class="slider" id="danceabilitySlider">
-	</div>
+{% for slider in sliders %}
+    <h3>{{slider}} Rating Slider</h3>
+        <input type="checkbox" class="custom-checkbox" id="{{slider}}"> <br>
+        <div class="slider-wrapper" id="slider-{{slider}}" style="display: none;">
+            <div class="labels">
+                <span class="low">Low</span>
+                <span class="medium">Medium</span>
+                <span class="high">High</span>
+            </div>
+            <input type="range" min="1" max="3" value="2" class="slider">
+            <div class="slider-dots">
+                <span id="1 {{slider}}" class="dot"></span>
+                <span id="2 {{slider}}" class="dot"></span>
+                <span id="3 {{slider}}" class="dot"></span>
+            </div>
+        </div>
 {% endfor %}
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{% static 'creatify_app/main.js' %}"></script>
 

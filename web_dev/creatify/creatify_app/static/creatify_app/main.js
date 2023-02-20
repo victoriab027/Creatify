@@ -35,3 +35,31 @@ function toggleButtonClass(button) {
       }
     });
   });
+
+// Get the slider element
+const slider = document.querySelector('.slider');
+
+// Get the dots elements
+const dots = document.querySelectorAll('.dot');
+// Loop through each dot
+dots.forEach(dot => {
+  // Get the value of the dot
+  const value = dot.id.split(' ')[0];
+  // Add an event listener to the slider
+  slider.addEventListener('input', () => {
+    // If the slider value matches the dot value, hide the dot, else show it
+    if (slider.value === value) {
+      dot.style.display = 'none';
+    } else {
+      dot.style.display = 'block';
+    }
+  });
+});
+$('.custom-checkbox').change(function() {
+  var sliderId = $(this).attr('id');
+  if ($(this).is(':checked')) {
+    $('#slider-' + sliderId).show();
+  } else {
+    $('#slider-' + sliderId).hide();
+  }
+});
