@@ -58,8 +58,22 @@ dots.forEach(dot => {
 $('.custom-checkbox').change(function() {
   var sliderId = $(this).attr('id');
   if ($(this).is(':checked')) {
-    $('#slider-' + sliderId).show();
+    $('#slider-' + sliderId).css({
+      'opacity': 1,
+      'pointer-events': 'auto'
+    });
+    $('#slider-' + sliderId).find('*').css({
+      'opacity': 1,
+      'pointer-events': 'auto'
+    });
   } else {
-    $('#slider-' + sliderId).hide();
+    $('#slider-' + sliderId).css({
+      'opacity': 0.5,
+      'pointer-events': 'none'
+    });
+    $('#slider-' + sliderId).find('*').css({
+      'opacity': 0.5,
+      'pointer-events': 'none'
+    });
   }
 });

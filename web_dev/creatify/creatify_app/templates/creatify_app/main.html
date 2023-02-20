@@ -22,8 +22,8 @@
 </div>
 {% for slider in sliders %}
     <h3>{{slider}} Rating Slider</h3>
-        <input type="checkbox" class="custom-checkbox" id="{{slider}}"> <br>
-        <div class="slider-wrapper" id="slider-{{slider}}" style="display: none;">
+        <input type="checkbox" class="custom-checkbox" id="{{slider}}" checked> <br>
+        <div class="slider-wrapper" id="slider-{{slider}}" >
             <div class="labels">
                 <span class="low">Low</span>
                 <span class="medium">Medium</span>
@@ -38,9 +38,9 @@
         </div>
 {% endfor %}
 
+<div id="center-container"><button id="generate_bt">Generate Playlist</button></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'creatify_app/main_page.js' %}"></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="{% static 'creatify_app/main_page.js' %}"></script>
-
-  {% endblock %}
+{% endblock %}
 
