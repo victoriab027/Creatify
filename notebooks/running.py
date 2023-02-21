@@ -65,36 +65,21 @@ def find_and_filter(settings, genres_list, sp):
                 song_df = song_df[(song_df[setting["Name"]] >= song_df[setting["Name"]].mean()-2*var) & (song_df[setting["Name"]] <= song_df[setting["Name"]].mean()+2*var)]
     return song_df
 
+def generate_playlist(generes_list, settings_df, goal, sp):
+    final_df = find_and_filter(settings_df,generes_list,sp)
+    while (len(final_df) < goal):
+        getter = find_and_filter(settings_df,generes_list,sp)
+        final_df = pd.concat([final_df, getter], ignore_index = True)
 
-# TODO: CHANGE TO YOUR SETTINGS IMPORT
-settings = [{"Name": "danceability", "On": True, "Level": 1},
-            {"Name": "energy", "On": True,"Level": -1},
-            {"Name": "loudness","On": True, "Level": 1},
-            {"Name": "instrumentalness","On": True, "Level": -1},
-            {"Name": "liveness", "On": False,"Level": 1}]
+    # TODO: PLAYLIST NAMER
+    #creating your playlist
+    pl_name = 'comp_generated'
+    result = sp.user_playlist_create(username,
+    name=pl_name)
+    playlist_id = result['id']
 
-settings_df = pd.DataFrame(settings)
-
-# TODO: CHANGE TO USER INPUT
-goal = 20
-
-# TODO: CHANGE TO USER INPUT
-generes_list = ["dance","indie-pop"]
-final_df = find_and_filter(settings_df,generes_list,sp)
-while (len(final_df) < goal):
-    getter = find_and_filter(settings_df,generes_list,sp)
-    final_df = pd.concat([final_df, getter], ignore_index = True)
-
-
-# TODO: PLAYLIST NAMER
-#creating your playlist
-pl_name = 'comp_generated'
-result = sp.user_playlist_create(username,
- name=pl_name)
-playlist_id = result['id']
-
-logger = logging.getLogger('examples.add_tracks_to_playlist')
-logging.basicConfig(level='DEBUG')
-scope = 'playlist-modify-public'
-tracks = final_df["track_id"]
-sp.user_playlist_add_tracks(username, playlist_id=playlist_id, tracks=tracks)
+    logger = logging.getLogger('examples.add_tracks_to_playlist')
+    logging.basicConfig(level='DEBUG')
+    scope = 'playlist-modify-public'
+    tracks = final_df["track_id"]
+    sp.user_playlist_add_tracks(username, playlist_id=playlist_id, tracks=tracks)
