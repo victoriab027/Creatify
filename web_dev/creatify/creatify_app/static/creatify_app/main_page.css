@@ -120,7 +120,7 @@ h3 {
 }
 .low {
  color: #408F43;
- opacity: .4;
+ opacity: .6;
  cursor:default;
 }
 .medium {
@@ -128,6 +128,8 @@ h3 {
  opacity: .8;
  cursor:default;
  font-weight: 700;
+ margin-bottom: -20px;
+ margin-right: 3px;
 }
 .high {
  color: #63DB67;
