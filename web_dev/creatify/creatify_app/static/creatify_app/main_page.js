@@ -97,4 +97,20 @@ function send_selections() {
 }
 const $myButton = $('#generate_bt');
 $myButton.click(send_selections);
-
+document.querySelectorAll('.slider').forEach(function(sliderInput) {
+  sliderInput.addEventListener('input', function(event) {
+    // get the slider value
+    const sliderValue = event.target.value;
+    document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    // show the span element corresponding to the slider value
+    if (sliderValue == 1) {
+      document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.7';
+    } else if (sliderValue == 2) {
+      document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
+    } else {
+      document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '1';
+    }
+  });
+});

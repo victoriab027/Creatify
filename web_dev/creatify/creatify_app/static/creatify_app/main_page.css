@@ -1,16 +1,23 @@
+#genre-filter{
+  margin: 10px;
+  background-color: #333;
+  color:#aaa;
+  padding: 10px;
+  font-size: large;
+}
 td{
  text-align: center;
 }
 .unclicked{
  background-color: #1db954;
  padding: 20px 10px;
- border: none;
  font-size: 16px;
- color: #fff;
- border-radius: 7px;
+ color: #eee;
+ border-radius: 15px;
  letter-spacing: 1px;
  font-weight: 700;
  text-transform: uppercase;
+ opacity: .8;
  text-align: center;
 }
 button:hover{
@@ -18,19 +25,19 @@ button:hover{
 }
 .clicked{
  background-color: #9db9a7;
- padding: 20px 20px;
- border: none;
+ padding: 20px 15px;
  font-size: 17px;
- color: #fff;
- border-radius: 7px;
- letter-spacing: 4px;
+ color: #eee;
+ border-radius: 10px;
+ letter-spacing: 2px;
  font-weight: 700;
  text-transform: uppercase;
+ opacity: 1;
  text-align: center;
 }
 .collapsible {
  background-color: #111;
- color: #fff;
+ color: #aaa;
  cursor: pointer;
  padding: 18px;
  width: 100%;
@@ -40,21 +47,21 @@ button:hover{
  font-size: 15px;
 } 
   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .collapsible:hover {
-    background-color: #000;
+.collapsible:hover {
+    background-color: #111;
 } 
-  /* Style the collapsible content. Note: hidden by default */
 .content {
-    padding: 0 18px;
-    background-color: black;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease-out;
+ padding: 0 18px;
+ background-color: #111;
+ max-height: 0;
+ overflow: hidden;
+ transition: max-height 0.25s ease-out;
 }
 h3 {
  font-size: xx-large;
  color: #5ecf62;
  display: inline-block;
+ cursor:default;
 }
 .slider-wrapper {
  display: flex;
@@ -62,14 +69,13 @@ h3 {
  align-items: center;
 }
 .slider-wrapper > * {
- width: 80%;
  margin-bottom: 10px;
 }
 .slider-wrapper > .slider {
  width: 100%;
  height: 20px;
  border-radius: 10px;
- background-color: #ddd;
+ background-color: #aaa;
  appearance: none;
  outline: none;
 }
@@ -93,16 +99,31 @@ h3 {
  position: relative;
  z-index: 1;
 }
+.slider-wrapper > .slider::-moz-range-thumb:hover{
+ background-color: #92d194;
+}
+.slider-wrapper > .slider::-webkit-slider-thumb:hover{
+ background-color: #92d194;
+}
 .slider-wrapper > .labels {
  display: flex;
  justify-content: space-between;
  width: 100%;
 }
-.slider-wrapper > .low {
- text-align: left;
+.low {
+ color: #408F43;
+ opacity: .4;
+ cursor:default;
 }
-.slider-wrapper > .high {
- text-align: right;
+.medium {
+ color: #6ADE70;
+ opacity: .8;
+ cursor:default;
+}
+.high {
+ color: #63DB67;
+ opacity: .4;
+ cursor:default;
 }
 .slider-dots {
  display: flex;
@@ -140,6 +161,10 @@ h3 {
  justify-content: center;
  align-items: center;
 }
+.greyed-out{
+ opacity: .5;
+ pointer-events: none;
+}
 #generate_bt{
  border: #000;
  background-color: #5ecf62;
@@ -148,8 +173,29 @@ h3 {
  padding: 20px;
  margin-top: 30px;
  cursor: pointer;
+ border-radius: 40px;
+ transition: 0.3s;
 }
-.greyed-out{
-  opacity: .5;
-  pointer-events: none;
+#generate_bt:hover{
+ opacity: 1;
+ border-radius: 5px;
+ background-color: #36c73b;
+}
+.bottom{
+  margin-top: 20px;
+  width: 100%;
+  height: 50px;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon{
+	height: 26px;
+	width: 26px;
+}
+.icon2{
+	height: 24px;
+	width: 24px;
+  margin-left: 10px;
 }
