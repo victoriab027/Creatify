@@ -24,7 +24,10 @@
 </div>
 {% for slider in sliders %}
     <h3>{{slider}}</h3>
-        <input type="checkbox" class="custom-checkbox" id="{{slider}}" checked> <br>
+        <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider}}" checked> 
+          <span class="tooltiptext">Enable/Disable {{slider}}</span>
+        </div>
+        <div class='subtext'>Learn More</div><br>
         <div class="slider-wrapper" id="slider-{{slider}}" >
             <div class="labels">
               <span class="low" id="low-{{slider}}">Low</span>

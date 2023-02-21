@@ -104,13 +104,20 @@ document.querySelectorAll('.slider').forEach(function(sliderInput) {
     document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.4';
     document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.4';
     document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '400';
+    document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '400';
+    document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '400';
+    
     // show the span element corresponding to the slider value
     if (sliderValue == 1) {
       document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.7';
+      document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '700';
     } else if (sliderValue == 2) {
       document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
+      document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '700';
     } else {
       document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '1';
+      document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '700';
     }
   });
 });
