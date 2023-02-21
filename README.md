@@ -7,7 +7,7 @@ DESCRIPTION OF THE NLP portion
 Many thanks to Ethan Fast's [<i>Empath</i> client](https://github.com/Ejhfast/empath-client) for making this possible.
 
 
-## Project Organization
+### Project Organization
 
     ├── README.md          <- The top-level README for developers using this project.
     │
