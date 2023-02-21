@@ -90,19 +90,20 @@ function send_selections() {
       });
     }
   });
+  
+  const csrftoken = $("[name=csrfmiddlewaretoken]").val();
   console.log(genres);
-  console.log(slider_values);
-  // $.ajax({
-  //   type: "POST",
-  //   url: "/path/to/view/",
-  //   data: {
-  //     'genres': genres,
-  //     'slider_values': slider_values
-  //   },
-  //   success: function(data) {
-  //     // Do something with the response from the server
-  //   }
-  // });
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRFToken': csrftoken},
+    url: "/result/",
+    data: {
+      'genres': JSON.stringify(genres),
+      'slider_values': JSON.stringify(slider_values),
+      'csrfmiddlewaretoken': csrftoken
+    },
+
+  });
 }
 
 const $myButton = $('#generate_bt');

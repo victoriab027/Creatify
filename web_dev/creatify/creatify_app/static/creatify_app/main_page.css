@@ -147,6 +147,7 @@ h3 {
  color:white;
  padding: 20px;
  margin-top: 30px;
+ cursor: pointer;
 }
 .greyed-out{
   opacity: .5;

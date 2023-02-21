@@ -2,6 +2,7 @@
 {% block title %}Creatify{% endblock %}
 
 {% block styles %}
+  {% csrf_token %}
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'creatify_app/main_page.css' %}">
   {% endblock %}
