@@ -62,6 +62,7 @@ h3 {
  color: #5ecf62;
  display: inline-block;
  cursor:default;
+ margin-left: 20px;
 }
 .slider-wrapper {
  display: flex;
