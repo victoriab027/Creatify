@@ -6,6 +6,7 @@
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'creatify_app/main_page.css' %}">
   {% endblock %}
+
 {% block content %}
 <button type="button" class="collapsible"><h2>Genere Selector</h2></button>
 <div class="content">
@@ -38,10 +39,7 @@
             </div>
         </div>
 {% endfor %}
-
 <div id="center-container"><button id="generate_bt">Generate Playlist</button></div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'creatify_app/main_page.js' %}"></script>
-
 {% endblock %}
-

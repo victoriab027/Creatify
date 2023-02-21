@@ -58,19 +58,12 @@ $('.custom-checkbox').change(function() {
     $('#slider-' + sliderId).find('*').addClass('greyed-out');
   }
 });
-
-//settings = [{"Name": "danceability", "On": True, "Level": 1},
-// {"Name": "energy", "On": True,"Level": -1},
-// {"Name": "loudness","On": True, "Level": 1},
-// {"Name": "instrumentalness","On": True, "Level": -1},
-// {"Name": "liveness", "On": False,"Level": 1}]
 function send_selections() {
   const genre_buttons = document.querySelectorAll('button.clicked');
   const genres = [];
   genre_buttons.forEach(button => {
     genres.push(button.textContent);
   });
-
   const slider_values = [];
   $('.slider-wrapper').each(function() {
     let slider_name = $(this).attr('id');
@@ -90,9 +83,7 @@ function send_selections() {
       });
     }
   });
-  
   const csrftoken = $("[name=csrfmiddlewaretoken]").val();
-  console.log(genres);
   $.ajax({
     type: "POST",
     headers: {'X-CSRFToken': csrftoken},
@@ -102,10 +93,8 @@ function send_selections() {
       'slider_values': JSON.stringify(slider_values),
       'csrfmiddlewaretoken': csrftoken
     },
-
   });
 }
-
 const $myButton = $('#generate_bt');
 $myButton.click(send_selections);
 
