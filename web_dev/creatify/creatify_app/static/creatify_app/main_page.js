@@ -111,7 +111,7 @@ document.querySelectorAll('.slider').forEach(function(sliderInput) {
     // show the span element corresponding to the slider value
     if (sliderValue == 1) {
       document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.7';
-      document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '700';
+      document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '600';
     } else if (sliderValue == 2) {
       document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
       document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '700';

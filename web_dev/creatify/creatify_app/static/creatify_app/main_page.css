@@ -60,7 +60,7 @@ h3 {
  font-size: xx-large;
  color: #5ecf62;
  display: inline-block;
- cursor:default;
+ cursor: help;
  margin-left: 20px;
 }
 .subtext{
@@ -177,6 +177,7 @@ h3 {
 }
 .tooltip:hover .tooltiptext {
   visibility: visible;
+  cursor: default;
 }
 .custom-checkbox:checked {
  background-color: lime; /* change background color of adjacent span element when checkbox is checked */
