@@ -12,7 +12,8 @@ import os
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-genius = lyricsgenius.Genius('Fhi5EdJREy-JHPolR00lgnuSX4vV0UiBHRcdWRUB8c_FD2TLpcDk0Wk0NtSSucHd', verbose=False, retries = 3)
+genius = lyricsgenius.Genius('i5KouOqTHCpdyW02rmaURbw1C2MUGVw-cayXvf0_VAHHmDlYqOXbA2c7iRp-NMxK', verbose=False, retries = 3)
+starter = 617
 
 def analyze_playlist(tracks, sp):
     
@@ -46,8 +47,6 @@ max = 999000
 low = 0
 high = 999
 
-starer = 47
-
 auth_manager = SpotifyClientCredentials(client_id=credentials.SPOTIPY_CLIENT_ID, client_secret=credentials.SPOTIPY_CLIENT_SECRET)
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
@@ -62,19 +61,9 @@ while low <= max:
     data = json.load(f1)
     print("loaded " + file_name)
     
-    #playlist_names = []
-   # for i in range(len(data['playlists'])):
-         # Gather a list of playlists names
-        #playlist_names.append(data['playlists'][i]['name'])
-    
-    # save playlist names
-   # str_name = "playlist names - " +  str(low)
-   # directory = 'playlist_data'
-   # os.path.join(directory, str_name)
-   # playlist_names.to_csv(str_name, index=False)
 
     for i in range(len(data['playlists'])):
-        if low == 0 and i >= 242 :
+        if low == 0 and i >= starter :
             # get the track ids
             playlist_tracks = []
             for j in range(len(data['playlists'][i]['tracks'])):
@@ -124,7 +113,7 @@ while low <= max:
             playlist_data.to_csv(filename, index=False)
             df_num = df_num + 1
         else:
-            print("skipped df" + str(i))
+            #print("skipped df" + str(i))
             df_num = df_num + 1
         
     low = low + 1000
