@@ -1,3 +1,4 @@
+// toggle genres
 function toggleButtonClass(button) {
     button.classList.toggle('clicked');
     button.classList.toggle('unclicked');
@@ -14,6 +15,7 @@ for (let i = 0; i < coll.length; i++) {
     }
   });
 }
+//genre filter from text input
 const filterInput = document.querySelector('#genre-filter');
 const genreTable = document.querySelector('#genre-table');
 const genreButtons = genreTable.querySelectorAll('button');
@@ -33,21 +35,7 @@ filterInput.addEventListener('input', () => {
     }
   });
 });
-const slider = document.querySelector('.slider');
-const dots = document.querySelectorAll('.dot');
-dots.forEach(dot => {
-  // Get the value of the dot
-  const value = dot.id.split(' ')[0];
-  // Add an event listener to the slider
-  slider.addEventListener('input', () => {
-    // If the slider value matches the dot value, hide the dot, else show it
-    if (slider.value === value) {
-      dot.style.display = 'none';
-    } else {
-      dot.style.display = 'block';
-    }
-  });
-});
+// hide desc and grey out slider with checkbox
 $('.custom-checkbox').change(function() {
   var sliderId = $(this).attr('id');
   if ($(this).is(':checked')) {
@@ -56,8 +44,49 @@ $('.custom-checkbox').change(function() {
   } else {
     $('#slider-' + sliderId).addClass('greyed-out');
     $('#slider-' + sliderId).find('*').addClass('greyed-out');
+    $('#desc-' + sliderId).hide();
   }
 });
+// opacity and font weight depending on slider position/value
+document.querySelectorAll('.slider').forEach(function(sliderInput) {
+  sliderInput.addEventListener('input', function(event) {
+    // get the slider value
+    const sliderValue = event.target.value;
+    document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '.4';
+    document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '400';
+    document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '400';
+    document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '400';
+    
+    // show the span element corresponding to the slider value
+    if (sliderValue == 1) {
+      document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.7';
+      document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '600';
+    } else if (sliderValue == 2) {
+      document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
+      document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '700';
+    } else {
+      document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '1';
+      document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '700';
+    }
+  });
+});
+//show description
+const sliderHeaders = document.querySelectorAll(".slider-name");
+sliderHeaders.forEach(header => {
+  header.addEventListener("click", () => {
+    // Get the slider description div associated with this header
+    const descriptionDiv = header.nextElementSibling.nextElementSibling;
+    // Toggle the display of the description div
+    if (descriptionDiv.style.display === "none") {
+      descriptionDiv.style.display = "block";
+    } else {
+      descriptionDiv.style.display = "none";
+    }
+  });
+});
+// send data to view
 function send_selections() {
   const genre_buttons = document.querySelectorAll('button.clicked');
   const genres = [];
@@ -95,29 +124,6 @@ function send_selections() {
     },
   });
 }
-const $myButton = $('#generate_bt');
-$myButton.click(send_selections);
-document.querySelectorAll('.slider').forEach(function(sliderInput) {
-  sliderInput.addEventListener('input', function(event) {
-    // get the slider value
-    const sliderValue = event.target.value;
-    document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.4';
-    document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.4';
-    document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '.4';
-    document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '400';
-    document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '400';
-    document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '400';
-    
-    // show the span element corresponding to the slider value
-    if (sliderValue == 1) {
-      document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.7';
-      document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '600';
-    } else if (sliderValue == 2) {
-      document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
-      document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '700';
-    } else {
-      document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '1';
-      document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '700';
-    }
-  });
-});
+//add send_select to button
+const $generate_button = $('#generate_bt');
+$generate_button.click(send_selections);

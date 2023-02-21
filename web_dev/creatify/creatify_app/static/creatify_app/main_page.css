@@ -61,7 +61,8 @@ h3 {
  color: #5ecf62;
  display: inline-block;
  cursor: help;
- margin-left: 20px;
+ margin-left: 10px;
+ user-select: none;
 }
 .subtext{
   font-size: large;
@@ -115,6 +116,7 @@ h3 {
  display: flex;
  justify-content: space-between;
  width: 100%;
+ user-select: none;
 }
 .low {
  color: #408F43;
@@ -144,7 +146,7 @@ h3 {
  width: 20px;
  height: 20px;
  border-radius: 50%;
- background-color: #999;
+ background-color: #888;
  pointer-events: none;
 }
 .custom-checkbox {
@@ -174,6 +176,7 @@ h3 {
  bottom: 100%;
  left: 50%;
  margin-left: -60px;
+ user-select: none;
 }
 .tooltip:hover .tooltiptext {
   visibility: visible;
@@ -195,6 +198,15 @@ h3 {
  opacity: .5;
  pointer-events: none;
 }
+.slider-description{
+ color: #aaa;
+ font-size: 15px;
+ margin-left: 25px;
+ cursor: default;
+ margin-top: -27px;
+ font-weight: 500;
+ user-select: none;
+}
 #generate_bt{
  border: #000;
  background-color: #5ecf62;
@@ -205,6 +217,7 @@ h3 {
  cursor: pointer;
  border-radius: 40px;
  transition: 0.3s;
+ user-select: none;
 }
 #generate_bt:hover{
  opacity: 1;
@@ -219,6 +232,7 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 .icon{
 	height: 26px;
