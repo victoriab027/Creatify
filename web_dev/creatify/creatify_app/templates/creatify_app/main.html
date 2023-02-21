@@ -9,13 +9,13 @@
 
 {% block content %}
 <button type="button" class="collapsible"><h2>Genere Selector</h2></button>
-<div class="content" style="max-height: 889px;">
+<div class="content" style="max-height: 965px;">
   <input type="text" id="genre-filter" placeholder="Enter a genre">
   <table id ="genre-table">
     <tr>
       {% for genre in genres %}
         <td><button class="unclicked" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'>{{ genre }}</button></td>
-        {% if forloop.counter|divisibleby:13 %}
+        {% if forloop.counter|divisibleby:12 %}
           </tr><tr>
         {% endif %}
       {% endfor %}

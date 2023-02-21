@@ -73,7 +73,7 @@ document.querySelectorAll('.slider').forEach(function(sliderInput) {
   });
 });
 //show description
-const sliderHeaders = document.querySelectorAll(".slider-name");
+const sliderHeaders = document.querySelectorAll(".slider");
 sliderHeaders.forEach(header => {
   header.addEventListener("click", () => {
     // Get the slider description div associated with this header
