@@ -1,6 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
+# settings genres goal sp
+# hard code sp for now
+# run notebook 6
 #rendering base page view
 def baserender(request):
     sliders = ['Danceability', 'Energy', 'Loudness', 'Instrumentalness', 'Liveness']

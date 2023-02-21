@@ -36,25 +36,25 @@ button:hover{
  text-align: center;
 }
 .collapsible {
- background-color: #111;
- color: #aaa;
- cursor: pointer;
- padding: 18px;
- width: 100%;
- border: none;
- text-align: left;
- outline: none;
- font-size: 15px;
-} 
+  background-color: #111;
+  color: #aaa;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
 .collapsible:hover {
-    background-color: #111;
-} 
+  background-color: #111;
+  color: #ddd;
+}
 .content {
- padding: 0 18px;
- background-color: #111;
- max-height: 0;
- overflow: hidden;
- transition: max-height 0.25s ease-out;
+  padding: 0 18px;
+  background-color: #111;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
 }
 h3 {
  font-size: xx-large;
