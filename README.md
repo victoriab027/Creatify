@@ -1,15 +1,15 @@
-Creatify
+# Creatify
 ==============================
-This project creates the website Creatify which goal is to create new playlists for spotify users depending on a certain "vibe". Users are required to input certain genres they wish for this playist and then can decide to manipulate certain psychoacusotic values. This was mainly implemented by running algoirhtms on data gathered from the Spotify API. The backend was developed using Jupyter notebooks to then become into one python file. The web application was created in Django.
+This project creates the website Creatify which goal is to create new playlists for spotify users depending on a certain "vibe". Users are required to input certain genres they wish for their playlist and then can decide to manipulate certain psychoacusotic values. This was implemented by running algoirhtms on data gathered from the Spotify API. The model was developed using Jupyter notebooks and then merged into one python script. The web application was created in Django.
 
-NLP
+## NLP
 ------------
-DESCRIPTION OF THE NLP DONE
+DESCRIPTION OF THE NLP portion
 
-Many thanks to Ethan Fast's <i>Empath</i> client (https://github.com/Ejhfast/empath-client) for making this possible.
+Many thanks to Ethan Fast's [<i>Empath</i> client](https://github.com/Ejhfast/empath-client) for making this possible.
 
 
-Project Organization
+## Project Organization
 ------------
 
     ├── README.md          <- The top-level README for developers using this project.
