@@ -23,23 +23,23 @@
   </table>
 </div>
 {% for slider in sliders %}
-    <h3 class="slider-name">{{slider}}</h3>
-        <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider}}" checked> 
-          <span class="tooltiptext">Enable/Disable {{slider}}</span>
+    <h3 class="slider-name">{{slider.name}}</h3>
+        <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider.name}}" checked> 
+          <span class="tooltiptext">Enable/Disable {{slider.name}}</span>
         </div>
-    <div class="slider-description" id="desc-{{slider}}" style="display:none;">Description of the {{slider}} slider</div>
+    <div class="slider-description" id="desc-{{slider.name}}" style="display:none;">{{slider.desc}}</div>
         {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
-        <div class="slider-wrapper" id="slider-{{slider}}" >
+        <div class="slider-wrapper" id="slider-{{slider.name}}" >
             <div class="labels">
-              <span class="low" id="low-{{slider}}">Low</span>
-              <span class="medium" id="medium-{{slider}}">Medium</span>
-              <span class="high" id="high-{{slider}}">High</span>
+              <span class="low" id="low-{{slider.name}}">Low</span>
+              <span class="medium" id="medium-{{slider.name}}">Medium</span>
+              <span class="high" id="high-{{slider.name}}">High</span>
             </div>
             <input type="range" min="1" max="3" value="2" class="slider" id="slider-input-{{slider}}">
             <div class="slider-dots">
-                <span id="1 {{slider}}" class="dot"></span>
-                <span id="2 {{slider}}" class="dot"></span>
-                <span id="3 {{slider}}" class="dot"></span>
+                <span id="1 {{slider.name}}" class="dot"></span>
+                <span id="2 {{slider.name}}" class="dot"></span>
+                <span id="3 {{slider.name}}" class="dot"></span>
             </div>
         </div>
 {% endfor %}
