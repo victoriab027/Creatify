@@ -6,6 +6,7 @@ from wordcloud import WordCloud
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import credentials
+import os
 
 auth_manager = SpotifyClientCredentials(client_id=credentials.SPOTIPY_CLIENT_ID, client_secret=credentials.SPOTIPY_CLIENT_SECRET)
 sp = spotipy.Spotify(auth_manager=auth_manager)
@@ -63,3 +64,8 @@ for p in range(len(playlists_data)):
     playlist_df = pd.DataFrame(playlist_data, index = [0])
 
     playlists = pd.concat([playlists, playlist_df], axis = 0, ignore_index = True)
+
+name = "playlists 0-999.csv"
+directory = 'playlist_data'
+filename = os.path.join(directory, name)
+playlist_data.to_csv(filename, index=False)
