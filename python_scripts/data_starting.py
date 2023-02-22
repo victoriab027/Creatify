@@ -21,13 +21,8 @@ playlist_features_list = ["name","tracks","artists",'avg_danceability', 'avg_ene
        'avg_loudness', 'avg_acousticness', 'avg_instrumentalness','avg_liveness', 'avg_valence' ,'avg_tempo']
 playlists = pd.DataFrame(columns = playlist_features_list)
 
-## CHANGE HERE
-old_data = pd.read_csv("/Users/victoria/Documents/me/Creatify/python_scripts/playlists 0-999.csv")
-starter = old_data.shape[0]
-
-for p in range(starter,len(playlists_data)):
+for p in range(0,1):
     # get the tracks and artists
-    print("working on playlist - "+str(p))
     playlist_tracks = []
     artists = []
     for i in range(len(data['playlists'][p]['tracks'])):
@@ -68,6 +63,11 @@ for p in range(starter,len(playlists_data)):
         'avg_tempo':  audio_features_df['tempo'].mean()}
     playlist_df = pd.DataFrame(playlist_data, index = [0])
 
+    playlists = pd.concat([playlists, playlist_df], axis = 0, ignore_index = True)
+
     # For every playlist, add it to the CSV
-    with open('playlists 0-999.csv', 'a') as f:
-        playlist_df.to_csv(f, header=False, index=False)
+    playlists.to_csv('playlists 0-999.csv', index=False)
+    #name = "playlists 0-999.csv"
+  #  directory = 'playlist_data'
+   # filename = os.path.join(directory, name)
+   # playlists.to_csv(filename, index=False)
