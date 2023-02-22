@@ -1,0 +1,31 @@
+h3 {
+ font-size: xx-large;
+ color: #5ecf62;
+ display: inline-block;
+ margin-left: 10px;
+ user-select: none;
+}
+#grid {
+ height: 100vh;
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 3px;
+ background: #5ecf62;
+}
+#grid {
+ grid-template-columns: 0.5fr 2fr;
+}
+.left {
+ background-color: #222;
+ grid-column: 1 / 2;
+ color: white;
+ user-select: none;
+}
+li {
+ user-select: text;
+}
+.right {
+ background-color: #999;
+ grid-column: 2 / 3;
+ border-top: 3px solid #5ecf62;
+} 

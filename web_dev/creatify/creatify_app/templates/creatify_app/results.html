@@ -1,0 +1,22 @@
+{% extends 'creatify_app/base.html' %}
+{% block title %}Your Playlist{% endblock %}
+
+{% block styles %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'creatify_app/results.css' %}">
+{% endblock %}
+
+{% block content %}
+<h3>Your Playlist</h3>
+<div id="grid">
+    <div class="left"> 
+        <h2>Suggested Names</h2>
+        <ul>
+            <li>name 1</li>
+        </ul>
+    </div>
+    <div class="right"></div>
+  </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'creatify_app/results.js' %}"></script>
+{% endblock %}

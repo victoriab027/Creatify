@@ -49,12 +49,11 @@ def baserender(request):
 # results page view
 def result_view(request):
     if request.method == 'POST':
-        genres = request.POST.getlist('genres')
-        slider_values = request.POST.get('slider_values')
-        # slider_values = json.loads(slider_values_json)
-    print(genres)
-    print(slider_values)
-    return render(request, 'creatify_app/result.html', {'selected_genres': genres, 'slider_values':slider_values})
+      genres = request.POST.getlist('genres')
+      slider_values = request.POST.get('slider_values')
+      return render(request, 'creatify_app/results.html', {'selected_genres': genres, 'slider_values':slider_values})
+    else:
+      return render(request, 'creatify_app/results.html')
 # Login and Logout Views
 def register(request):
     if request.method == 'POST':
