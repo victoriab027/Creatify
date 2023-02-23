@@ -116,15 +116,12 @@ function send_selections() {
   $.ajax({
     type: "POST",
     headers: {'X-CSRFToken': csrftoken},
-    url: "/results/",
+    url: "{% url 'result_view' %}",
     data: {
       'genres': JSON.stringify(genres),
       'slider_values': JSON.stringify(slider_values),
       'csrfmiddlewaretoken': csrftoken
     },
-    success: function() {
-      window.location.href = '/results/'; // Replace with the URL of the new page
-    }
   });
 }
 //add send_select to button

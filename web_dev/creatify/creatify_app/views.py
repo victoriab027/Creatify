@@ -51,9 +51,15 @@ def result_view(request):
     if request.method == 'POST':
       genres = request.POST.getlist('genres')
       slider_values = request.POST.get('slider_values')
-      return render(request, 'creatify_app/results.html', {'selected_genres': genres, 'slider_values':slider_values})
-    else:
+      request.session['selected_genres'] = genres
+      request.session['slider_values'] = slider_values
       return render(request, 'creatify_app/results.html')
+    else:
+      selected_genres = request.session.get('selected_genres')
+      slider_values = request.session.get('slider_values')
+      context = {'selected_genres': selected_genres, 'slider_values': slider_values}
+      return render(request, 'creatify_app/results.html', context)
+    
 # Login and Logout Views
 def register(request):
     if request.method == 'POST':
