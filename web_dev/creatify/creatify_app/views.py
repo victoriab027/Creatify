@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
+import json
 #from .running import generate_playlist
 # settings genres goal sp
 # hard code sp for now
@@ -51,6 +52,10 @@ def result_view(request):
     if request.method == 'POST':
       genres = request.POST.getlist('genres')
       slider_values = request.POST.get('slider_values')
+      genres = json.loads(genres[0])
+      genres = [word.capitalize() for word in genres]
+      slider_values = json.loads(slider_values)
+      slider_values = convert_slider_vals(slider_values)
       request.session['selected_genres'] = genres
       request.session['slider_values'] = slider_values
       return render(request, 'creatify_app/results.html')
@@ -59,7 +64,48 @@ def result_view(request):
       slider_values = request.session.get('slider_values')
       context = {'selected_genres': selected_genres, 'slider_values': slider_values}
       return render(request, 'creatify_app/results.html', context)
-    
+def convert_slider_vals(slider_list):
+  print(slider_list)
+  for slider in slider_list:
+    if not slider['On']:
+      continue
+    if 'Danceability' in slider['name']:
+      if slider["Level"] == -1:
+        slider["Level"] = "Low"+ f" {slider['name']}"
+      elif slider["Level"] == 0:
+        slider["Level"] = "Medium"+ f" {slider['name']}"
+      elif slider['Level'] == 1:
+        slider["Level"] = "High"+ f" {slider['name']}"
+    elif 'Energy' in slider['name']:
+      if slider["Level"] == -1:
+        slider["Level"] = "Calmer"+ f" {slider['name']}"
+      elif slider["Level"] == 0:
+        slider["Level"] = "Average"+ f" {slider['name']}"
+      elif slider['Level'] == 1:
+        slider["Level"] = "Energetic"
+    elif 'Tempo' in slider['name']:
+      if slider["Level"] == -1:
+        slider["Level"] = "Slower"+ f" {slider['name']}"
+      elif slider["Level"] == 0:
+        slider["Level"] = "Average"+ f" {slider['name']}"
+      elif slider['Level'] == 1:
+        slider["Level"] = "Faster"+ f" {slider['name']}"
+    elif 'Instrumentalness' in slider['name']:
+      if slider["Level"] == -1:
+        slider["Level"] = "Vocal"
+      elif slider["Level"] == 0:
+        slider["Level"] = "Average"+ f" {slider['name']}"
+      elif slider['Level'] == 1:
+        slider["Level"] = "Instrumental"
+    elif 'Valence' in slider['name']:
+      if slider["Level"] == -1: #Meloncholic
+        slider["Level"] = "Meloncholic"
+      elif slider["Level"] == 0:
+        slider["Level"] = "Average"+ f" {slider['name']}"
+      elif slider['Level'] == 1:
+        slider["Level"] = "Cheery"
+  print(slider_list)
+  return slider_list
 # Login and Logout Views
 def register(request):
     if request.method == 'POST':
