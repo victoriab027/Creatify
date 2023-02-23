@@ -45,7 +45,7 @@ def baserender(request):
     "high":"Faster"
   }
 ]
-    genres = ['acoustic', 'afrobeat', 'alt-rock', 'alternative', 'ambient', 'anime', 'black-metal', 'bluegrass', 'blues', 'bossanova', 'brazil', 'breakbeat', 'british', 'cantopop', 'chicago-house', 'children', 'chill', 'classical', 'club', 'comedy', 'country', 'dance', 'dancehall', 'death-metal', 'deep-house', 'detroit-techno', 'disco', 'disney', 'drum-and-bass', 'dub', 'dubstep', 'edm', 'electro', 'electronic', 'emo', 'folk', 'forro', 'french', 'funk', 'garage', 'german', 'gospel', 'goth', 'grindcore', 'groove', 'grunge', 'guitar', 'happy', 'hard-rock', 'hardcore', 'hardstyle', 'heavy-metal', 'hip-hop', 'holidays', 'honky-tonk', 'house', 'idm', 'indian', 'indie', 'indie-pop', 'industrial', 'iranian', 'j-dance', 'j-idol', 'j-pop', 'j-rock', 'jazz', 'k-pop', 'kids', 'latin', 'latino', 'malay', 'mandopop', 'metal', 'metal-misc', 'metalcore', 'minimal-techno', 'movies', 'mpb', 'new-age', 'new-release', 'opera', 'pagode', 'party', 'philippines-opm', 'piano', 'pop', 'pop-film', 'post-dubstep', 'power-pop', 'progressive-house', 'psych-rock', 'punk', 'punk-rock', 'r-n-b', 'rainy-day', 'reggae', 'reggaeton', 'road-trip', 'rock', 'rock-n-roll', 'rockabilly', 'romance', 'sad', 'salsa', 'samba', 'sertanejo', 'show-tunes', 'singer-songwriter', 'ska', 'sleep', 'songwriter', 'soul', 'soundtracks', 'spanish', 'study', 'summer', 'swedish', 'synth-pop', 'tango', 'techno', 'trance', 'trip-hop', 'turkish', 'work-out', 'world-music']
+    genres = ['afrobeat', 'alt-Rock', 'alternative', 'ambient', 'anime', 'black-Metal', 'bluegrass', 'blues', 'bossanova', 'brazil', 'breakbeat', 'british', 'cantopop', 'chicago-House', 'children', 'chill', 'classical', 'club', 'comedy', 'country', 'dance', 'dancehall', 'death-Metal', 'deep-House', 'detroit-Techno', 'disco', 'disney', 'drum-and-Bass', 'dub', 'dubstep', 'edm', 'electro', 'electronic', 'emo', 'folk', 'forro', 'french', 'funk', 'garage', 'german', 'gospel', 'goth', 'grindcore', 'groove', 'grunge', 'guitar', 'happy', 'hard-Rock', 'hardcore', 'hardstyle', 'heavy-Metal', 'hip-Hop', 'holidays', 'honky-Tonk', 'house', 'idm', 'indian', 'indie', 'indie-Pop', 'industrial', 'iranian', 'j-Dance', 'j-Idol', 'j-Pop', 'j-Rock', 'jazz', 'k-Pop', 'kids', 'latin', 'latino', 'malay', 'mandopop', 'metal', 'metal-Misc', 'metalcore', 'minimal-Techno', 'movies', 'mpb', 'new-Age', 'new-Release', 'opera', 'pagode', 'party', 'philippines-Opm', 'piano', 'pop', 'pop-Film', 'post-Dubstep', 'power-Pop', 'progressive-House', 'psych-Rock', 'punk', 'punk-Rock', 'R-N-B', 'rainy-Day', 'reggae', 'reggaeton', 'road-trip', 'rock', 'rock-n-Roll', 'rockabilly', 'romance', 'sad', 'salsa', 'samba', 'sertanejo', 'show-Tunes', 'singer-Songwriter', 'ska', 'sleep', 'songwriter', 'soul', 'soundtracks', 'spanish', 'study', 'summer', 'swedish', 'synth-Pop', 'tango', 'techno', 'trance', 'trip-Hop', 'turkish', 'work-Out', 'world-Music']
     return render(request, 'creatify_app/main.html', {'genres':genres, 'sliders':sliders})
 # results page view
 def result_view(request):
@@ -68,6 +68,7 @@ def convert_slider_vals(slider_list):
   print(slider_list)
   for slider in slider_list:
     if not slider['On']:
+      slider["Level"] = "skip"
       continue
     if 'Danceability' in slider['name']:
       if slider["Level"] == -1:
@@ -104,7 +105,6 @@ def convert_slider_vals(slider_list):
         slider["Level"] = "Average"+ f" {slider['name']}"
       elif slider['Level'] == 1:
         slider["Level"] = "Cheery"
-  print(slider_list)
   return slider_list
 # Login and Logout Views
 def register(request):

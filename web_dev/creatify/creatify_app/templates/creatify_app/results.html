@@ -7,12 +7,18 @@
 {% endblock %}
 
 {% block content %}
-<h3>Your {% for genre in selected_genres%} {{genre}}, {%endfor%} Playlist</h3> 
-{% comment %} <h4>
-  Genres: 
-</h4>  {% endcomment %}
+<h3>Your 
+  {% for genre in selected_genres%}  
+  {{genre}} 
+  {%endfor%} 
+  Playlist</h3> 
 <h4>
-  Attributes: {% for att in slider_values%} {{att.Level}}, {% endfor%} 
+  Attributes: 
+  {% for att in slider_values %} 
+  {% if not att.Level == 'skip' %} 
+    {{ att.Level }} 
+  {% endif %} 
+{% endfor %}
 </h4>
 <div id="grid">
     <div class="left"> 
