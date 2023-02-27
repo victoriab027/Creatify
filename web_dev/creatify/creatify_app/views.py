@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
+from spotipy import oauth2, Spotify
+from . import credentials
 import json
 #from .running import generate_playlist
 # settings genres goal sp
@@ -106,6 +108,15 @@ def convert_slider_vals(slider_list):
       elif slider['Level'] == 1:
         slider["Level"] = "Cheery"
   return slider_list
+# get spotify authorization
+def auth_view(request):
+  SCOPE = ('user-read-recently-played,user-library-read,user-read-currently-playing,playlist-read-private,playlist-modify-private,playlist-modify-public,user-read-email,user-modify-playback-state,user-read-private,user-read-playback-state')
+  sp_oauth = oauth2.SpotifyOAuth(credentials.SPOTIPY_CLIENT_ID,credentials.SPOTIPY_CLIENT_SECRET, credentials.SPOTIPY_REDIRECT_URI ,scope=SCOPE )
+  code = sp_oauth.get_auth_response(open_browser=True)
+  token = sp_oauth.get_access_token(code)
+  sp = Spotify(auth=token['access_token'])
+  request.session['sp'] = sp
+  request.session['user_id'] = sp.current_user()['id']
 # Login and Logout Views
 def register(request):
     if request.method == 'POST':
