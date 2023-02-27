@@ -139,3 +139,5 @@ migrations
 *data/
 *credentials.py
 *credentials.env
+
+.db
