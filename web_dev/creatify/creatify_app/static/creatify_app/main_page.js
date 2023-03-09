@@ -3,10 +3,14 @@ function toggleButtonClass(button) {
     button.classList.toggle('btn');
     button.classList.toggle('active');
 }
-const coll = document.getElementsByClassName("collapsible");
+function toggleButtonClass_cta(button) {
+  button.classList.toggle('cta');
+  button.classList.toggle('cta_active');
+}
+const coll = document.getElementsByClassName("cta");
 for (let i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
+    this.classList.toggle("cta_active");
     let content = this.nextElementSibling;
     if (content.style.maxHeight != content.scrollHeight + "px"){
       content.style.maxHeight = content.scrollHeight + "px";

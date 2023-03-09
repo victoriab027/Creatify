@@ -37,7 +37,15 @@
     </tr>
   </table>
 </div>
-<button type="button" class="collapsible"><h2>Collapse Genre Selector</h2></button>
+<button type = "button" class="cta" onclick = 'toggleButtonClass_cta(this)'>
+    <span>Collapse unused genres</span>
+        <svg viewBox="0 0 10 13" height="20px" width="10px">
+        <path d="M5,1 L5,20"></path>
+        <polyline points="1 12 5 1 9 12"></polyline>
+        </svg>
+  </button>
+
+<!--<button type="button" class="collapsible"><h2>Collapse Genre Selector</h2></button>-->
 {% for slider in sliders %}
     <h3 class="slider">{{slider.name}}</h3>
 
@@ -68,7 +76,12 @@
         </div>
 {% endfor %}
 
-
+<div class = "center">
+    <button data-text="Awesome" class="gen_button">
+      <span class="actual-text">&nbsp;GENREATE PLAYLIST&nbsp;</span>
+      <span class="gen_hover-text" aria-hidden="true">&nbsp;GENREATE PLAYLIST&nbsp;</span>
+  </button>
+  </div>
 
 <div id="center-container"><button id="generate_bt">Generate Playlist</button></div>
 
