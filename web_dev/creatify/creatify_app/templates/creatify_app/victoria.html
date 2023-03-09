@@ -1,0 +1,77 @@
+{% extends 'creatify_app/base.html' %}
+{% block title %}Creatify{% endblock %}
+
+{% block styles %}
+  {% csrf_token %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'creatify_app/main_page.css' %}">
+  {% endblock %}
+
+{% block content %}
+<h1>Creatify</h1>
+<h4>Recommend Less. Discover More.</h4>
+
+
+<h2>Genere Selector</h2>
+<div class="content" style="max-height: 965px;">
+
+    <!-- 
+        Search button from: https://uiverse.io/joe-watson-sbf/shy-snake-4
+
+    -->
+    <div class="search">
+        <!--<input type="text" id="genre-filter" class="search__input" placeholder="Search genres...">-->
+        <input type="text" id="genre-filter" placeholder="Enter a genre">
+    </div>
+    <br>
+  <table id ="genre-table">
+    <tr>
+      {% for genre in genres %}
+     <button class="btn" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'> {{ genre }}
+        </button>
+        <!--<td><button class="unclicked" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'>{{ genre }}</button></td>-->
+        {% if forloop.counter|divisibleby:12 %}
+          </tr><tr>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </table>
+</div>
+<button type="button" class="collapsible"><h2>Collapse Genre Selector</h2></button>
+{% for slider in sliders %}
+    <h3 class="slider">{{slider.name}}</h3>
+
+     <!-- New Toggle Button -->
+     <div class = "center">
+     <label class="switch">
+        <input type="checkbox"  id="{{slider.name}}">
+        <span class="toggle-slider"></span>
+        <span class="toggle-text on">ENABLED</span>
+        <span class="toggle-text off">DISABLED</span>
+      </label>
+    </div>
+<!--
+        <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider.name}}" checked> 
+          <span class="tooltiptext">Enable/Disable {{slider.name}}</span>
+        </div>-->
+    <div class="slider-description" id="desc-{{slider.name}}" style="display:none;">{{slider.desc}}</div>
+        {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
+        <div class="slider-wrapper" id="slider-{{slider.name}}" >
+            <span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
+            <div class="labels">
+              <span class="low" id="low-{{slider.name}}">{{slider.low}}</span>
+              <span class="high" id="high-{{slider.name}}">{{slider.high}}</span>
+            </div>
+            <div class = "center">
+                <input type="range" min="0" max="100" value="0" class="slider" id="slider-input-{{slider.name}}"/>
+            </div>
+        </div>
+{% endfor %}
+
+
+
+<div id="center-container"><button id="generate_bt">Generate Playlist</button></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'creatify_app/main_page.js' %}"></script>
+{% endblock %}

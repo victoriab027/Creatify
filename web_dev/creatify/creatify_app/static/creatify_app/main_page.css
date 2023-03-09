@@ -1,18 +1,39 @@
-#genre-filter{
-  margin: 10px;
-  background-color: #333;
-  color:#aaa;
-  padding: 10px;
-  font-size: large;
+@font-face {
+  font-family: Notable;
+  src: url(Notable-Regular.ttf);
 }
+@font-face {
+  font-family: Secondary;
+  src: url(Recursive-VariableFont.ttf);
+}
+
+
+/* Basic Words */
+h1 {
+  font-family: Notable;
+  color: #363537;
+  text-align: center;
+  font-size: 85px;
+}
+h4 {
+  font-family: Secondary;
+  color: white;
+  text-align: center;
+  font-size: 25px;
+}
+h2 {
+  font-family: Secondary;
+  color: white;
+}
+
 td{
  text-align: center;
 }
 .unclicked{
- background-color: #1db954;
+ background-color: #444554;
  padding: 20px 10px;
- font-size: 16px;
- color: #eee;
+ font-size: 14px;
+ color: whitesmoke;
  border-radius: 15px;
  letter-spacing: 1px;
  font-weight: 700;
@@ -21,22 +42,21 @@ td{
  text-align: center;
 }
 button:hover{
- background-color: #9db9a7;
+ background-color: #018b69;
 }
-.clicked{
- background-color: #9db9a7;
+/*.clicked{
+ background-color: #00A97F;
  padding: 20px 15px;
- font-size: 17px;
- color: #eee;
+ font-size: 14px;
+ color: whitesmoke;
  border-radius: 10px;
- letter-spacing: 2px;
+ letter-spacing: 1px;
  font-weight: 700;
  text-transform: uppercase;
  opacity: 1;
  text-align: center;
-}
+}*/
 .collapsible {
-  background-color: #111;
   color: #aaa;
   cursor: pointer;
   padding: 18px;
@@ -47,109 +67,48 @@ button:hover{
   font-size: 15px;
 }
 .collapsible:hover {
-  background-color: #111;
-  color: #ddd;
+  color: #6A9D2A;
 }
 .content {
   padding: 0px 10px 10px 15px;
-  background-color: #111;
   overflow: hidden;
   transition: max-height 0.25s ease-out;
 }
 h3 {
  font-size: xx-large;
- color: #5ecf62;
- display: inline-block;
+ color: white;
+ text-align: center;
  cursor: help;
- margin-left: 10px;
  user-select: none;
+ font-family: Notable;
 }
 .subtext{
   font-size: large;
-  color: #5ecf62;
+  color: #6A9D2A;
   display: inline-block;
   cursor:default;
 }
-.slider-wrapper {
- display: flex;
- flex-direction: column;
- align-items: center;
-}
-.slider-wrapper > * {
- margin-bottom: 10px;
-}
-.slider-wrapper > .slider {
- width: 100%;
- height: 20px;
- border-radius: 10px;
- background-color: #aaa;
- appearance: none;
- outline: none;
-}
-.slider-wrapper > .slider::-webkit-slider-thumb {
- appearance: none;
- height: 30px;
- width: 30px;
- border-radius: 50%;
- background-color: #4CAF50;
- cursor: pointer;
- position: relative;
- z-index: 1;
-}
-.slider-wrapper > .slider::-moz-range-thumb {
- appearance: none;
- height: 30px;
- width: 30px;
- border-radius: 50%;
- background-color: #4CAF50;
- cursor: pointer;
- position: relative;
- z-index: 1;
-}
-.slider-wrapper > .slider::-moz-range-thumb:hover{
- background-color: #92d194;
-}
-.slider-wrapper > .slider::-webkit-slider-thumb:hover{
- background-color: #92d194;
-}
-.slider-wrapper > .labels {
- display: flex;
- justify-content: space-between;
- width: 100%;
- user-select: none;
-}
+
 .low {
- color: #408F43;
+ color: #363537;
  opacity: .6;
  cursor:default;
+ font-family: Secondary;
 }
 .medium {
- color: #6ADE70;
+ color: #363537;
  opacity: .8;
  cursor:default;
  font-weight: 700;
  margin-bottom: -20px;
  margin-right: 3px;
+ font-family: Secondary;
 }
 .high {
- color: #63DB67;
+ color: #363537;
  opacity: .4;
  cursor:default;
-}
-.slider-dots {
- display: flex;
- justify-content: space-between;
- width: 100%;
- height: 20px;
- margin-top: -30px;
- pointer-events: none;
-}
-.slider-dots .dot {
- width: 20px;
- height: 20px;
- border-radius: 50%;
- background-color: #888;
- pointer-events: none;
+ font-family: Secondary;
 }
 .custom-checkbox {
  appearance: none;
@@ -168,7 +127,7 @@ h3 {
 .tooltip .tooltiptext {
  font-size: small;
  visibility: hidden;
- background-color: black;
+ background-color: #545454;
  color: #fff;
  text-align: center;
  border-radius: 6px;
@@ -183,13 +142,6 @@ h3 {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   cursor: default;
-}
-.custom-checkbox:checked {
- background-color: lime; /* change background color of adjacent span element when checkbox is checked */
-}
-.custom-checkbox {
- color: #000; /* set color of adjacent span element */
- font-size: 16px;
 }
 #center-container {
  display: flex;
@@ -230,7 +182,7 @@ h3 {
   margin-top: 20px;
   width: 100%;
   height: 50px;
-  background: #333;
+  background: #545454;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -245,3 +197,310 @@ h3 {
 	width: 24px;
   margin-left: 10px;
 }
+
+.center {
+  text-align: center;
+}
+
+/* TOGGLE BUTTON 
+
+Source: https://alvarotrigo.com/blog/toggle-switch-css/ 
+
+*/
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  width: 9em;
+  height: 2em;
+  overflow: hidden;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(154, 154, 154);
+  color: white;
+  transition: .4s;
+  border-radius: 30px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 20px;
+  border: 1px solid #333;
+  left: 0.4em;
+  bottom: 0.2em;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .toggle-slider {
+  background-color: #435b24;
+}
+
+input:focus + .toggle-slider {
+  box-shadow: 0 0 1px #435b24;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(6.8em);
+}
+
+.switch .toggle-text {
+  position: absolute;
+  top: 50%;
+  pointer-events: none;
+  text-transform: uppercase;
+  transform: translateY(-50%);
+  transition: .4s;
+}
+
+.switch .toggle-text.on {
+  left: .8rem;
+  color: rgb(255, 255, 255);
+  transform: translateX(-6rem) translateY(-50%);
+}
+
+.switch .toggle-text.off {
+  color: rgb(255, 255, 255);
+  right: .8rem;
+}
+
+input:checked ~ .toggle-text.off {
+  transform: translateX(6rem) translateY(-50%);
+}
+
+input:checked ~ .toggle-text.on {
+  transform: translateX(0) translateY(-50%);
+}
+
+/* SEARCH BAR */
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.search__input {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: #f4f2f2;
+  border: none;
+  color: #646464;
+  padding: 0.7rem 1rem;
+  border-radius: 30px;
+  width: 12em;
+  transition: all ease-in-out .5s;
+  margin-right: -2rem;
+}
+
+.search__input:hover, .search__input:focus {
+  box-shadow: 0 0 1em #00000013;
+}
+
+.search__input:focus {
+  outline: none;
+  background-color: #f0eeee;
+}
+
+.search__input::-webkit-input-placeholder {
+  font-weight: 100;
+  color: #ccc;
+}
+
+.search__input:focus + .search__button {
+  background-color: #f0eeee;
+}
+
+.search__button {
+  border: none;
+  background-color: #f4f2f2;
+  margin-top: .1em;
+}
+
+.search__button:hover {
+  cursor: pointer;
+}
+
+.search__icon {
+  height: 1.3em;
+  width: 1.3em;
+  fill: #b4b4b4;
+  position: relative;
+}
+
+
+/*
+
+CUSTOM SLIDER 
+
+Source: https://codepen.io/thehonestape/pen/DRpEGX
+
+*/
+input[type="range"] { 
+  text-align: center;
+  margin: auto;
+  -webkit-appearance: none;
+  position: relative;
+  overflow: hidden;
+  height: 40px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 0; /* iOS */
+}
+
+::-webkit-slider-runnable-track {
+  background: #ddd;
+}/*
+ * 1. Set to 0 width and remove border for a slider without a thumb
+ * 2. Shadow is negative the full width of the input and has a spread 
+ *    of the width of the input.
+ */
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; /* 1 */
+  height: 40px;
+  background: #fff;
+  box-shadow: -800px 0 0 800px #435b24; /* 2 */
+  border: 2px solid #999; /* 1 */
+}
+
+::-moz-range-track {
+  height: 40px;
+  background: #ddd;
+}::-moz-range-thumb {
+  background: #fff;
+  height: 40px;
+  width: 200px;
+  border: 3px solid #999;
+  border-radius: 0 !important;
+  box-shadow: -200px 0 0 200px #435b24;
+  box-sizing: border-box;
+}
+
+::-ms-fill-lower { 
+  background: #435b24;
+}
+
+::-ms-thumb { 
+  background: #fff;
+  border: 2px solid #999;
+  height: 40px;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+::-ms-ticks-after { 
+  display: none; 
+}
+
+::-ms-ticks-before { 
+  display: none; 
+}
+
+::-ms-track { 
+  background: #ddd;
+  color: transparent;
+  height: 40px;
+  border: none;
+}
+::-ms-tooltip { 
+  display: none;
+}
+
+/*
+CUSTOM BUTTON - for generes
+*/
+.btn {
+  --color: #00A97F;
+  --color2: rgb(10, 25, 30);
+  padding: 0.8em 1.75em;
+  background-color: transparent;
+  border-radius: 6px;
+  border: .3px solid var(--color);
+  transition: .5s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  font-weight: 300;
+  font-size: 17px;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  color: var(--color);
+ }
+ 
+ .btn::after, .btn::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: skew(90deg) translate(-50%, -50%);
+  position: absolute;
+  inset: 50%;
+  left: 25%;
+  z-index: -1;
+  transition: .5s ease-out;
+  background-color: var(--color);
+ }
+ 
+ .btn::before {
+  top: -50%;
+  left: -25%;
+  transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+ }
+ 
+ .btn:hover::before {
+  transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+  background-color: #00A97F
+ }
+ 
+ .btn:hover::after {
+  transform: skew(45deg) translate(-50%, -50%);
+  background-color: #00A97F;
+ }
+ 
+ .btn:hover {
+  color: var(--color2);
+  background-color: #00A97F;
+ }
+ 
+ .active {
+  /*filter: brightness(.7);*/
+  transform: scale(.98);
+  --color: #ffffff;
+  --color2: rgb(10, 25, 30);
+  padding: 0.8em 1.75em;
+  background-color: #00A97F;
+  border-radius: 6px;
+  border: .3px solid var(--color);
+  transition: .5s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  font-weight: 300;
+  font-size: 17px;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  color: var(--color);
+ }
