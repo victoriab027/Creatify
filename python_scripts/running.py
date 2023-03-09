@@ -83,3 +83,4 @@ def generate_playlist(generes_list, settings_df, goal, sp):
     scope = 'playlist-modify-public'
     tracks = final_df["track_id"]
     sp.user_playlist_add_tracks(username, playlist_id=playlist_id, tracks=tracks)
+    # ADD: return playlist_id
