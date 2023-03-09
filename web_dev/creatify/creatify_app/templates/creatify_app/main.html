@@ -30,7 +30,8 @@
     <div class="slider-description" id="desc-{{slider.name}}" style="display:none;">{{slider.desc}}</div>
         {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
         <div class="slider-wrapper" id="slider-{{slider.name}}" >
-            <span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
             <div class="labels">
               <span class="low" id="low-{{slider.name}}">{{slider.low}}</span>
               <span class="high" id="high-{{slider.name}}">{{slider.high}}</span>
