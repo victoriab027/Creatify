@@ -1,7 +1,7 @@
 // toggle genres
 function toggleButtonClass(button) {
-    button.classList.toggle('clicked');
-    button.classList.toggle('unclicked');
+    button.classList.toggle('btn');
+    button.classList.toggle('active');
 }
 const coll = document.getElementsByClassName("collapsible");
 for (let i = 0; i < coll.length; i++) {
@@ -25,7 +25,7 @@ filterInput.addEventListener('input', () => {
   genreButtons.forEach(button => {
     const genre = button.dataset.genre.toLowerCase();
     const td = button.parentNode;
-    if (button.classList.contains('clicked')) {
+    if (button.classList.contains('active')) {
       return false;
     }
     if (!genre.includes(filterText)) {
@@ -130,3 +130,5 @@ function send_selections() {
 //add send_select to button
 const $generate_button = $('#generate_bt');
 $generate_button.click(send_selections);
+
+
