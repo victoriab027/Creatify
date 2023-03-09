@@ -4,12 +4,31 @@ from django.shortcuts import render, redirect
 from spotipy import oauth2, Spotify
 from . import credentials
 import json
-#from .running import generate_playlist
-# settings genres goal sp
-# hard code sp for now
-# run notebook 6
-#rendering base page view
+import pandas as pd
+import requests
+def get_top_features(sp):
+    '''
+    This is a function that
+    '''
+
+    ranges = ['short_term', 'medium_term', 'long_term']
+
+    top_tracks = []
+
+    for sp_range in ranges:
+        results = sp.current_user_top_tracks(time_range=sp_range, limit=50)
+        for i in range(len(results)):
+            top_tracks.append(results['items'][i]['uri'])
+    audio_features = sp.audio_features(top_tracks)
+    df = pd.DataFrame(audio_features)
+    songs = {'danceability': [df.loc[df['danceability'].idxmin(), 'uri'], df.loc[df['danceability'].idxmax(), 'uri']], 
+        'energy': [df.loc[df['energy'].idxmin(), 'uri'], df.loc[df['energy'].idxmax(), 'uri']], 
+         'valence': [df.loc[df['valence'].idxmin(), 'uri'], df.loc[df['valence'].idxmax(), 'uri']],
+         'instrumentalness': [df.loc[df['instrumentalness'].idxmin(), 'uri'], df.loc[df['instrumentalness'].idxmax(), 'uri']],
+         'tempo': [df.loc[df['tempo'].idxmin(), 'uri'], df.loc[df['tempo'].idxmax(), 'uri']]}
+    return songs # this returns the above values in min then max order
 def baserender(request):
+    
     sliders = [
   {
     "name": "Danceability",
@@ -110,13 +129,26 @@ def convert_slider_vals(slider_list):
   return slider_list
 # get spotify authorization
 def auth_view(request):
-  SCOPE = ('user-read-recently-played,user-library-read,user-read-currently-playing,playlist-read-private,playlist-modify-private,playlist-modify-public,user-read-email,user-modify-playback-state,user-read-private,user-read-playback-state')
-  sp_oauth = oauth2.SpotifyOAuth(credentials.SPOTIPY_CLIENT_ID,credentials.SPOTIPY_CLIENT_SECRET, credentials.SPOTIPY_REDIRECT_URI ,scope=SCOPE )
-  code = sp_oauth.get_auth_response(open_browser=True)
-  token = sp_oauth.get_access_token(code)
-  sp = Spotify(auth=token['access_token'])
-  request.session['sp'] = sp
-  request.session['user_id'] = sp.current_user()['id']
+    SCOPE = ('user-read-recently-played,user-library-read,user-read-currently-playing,playlist-read-private,playlist-modify-private,playlist-modify-public,user-read-email,user-modify-playback-state,user-read-private,user-read-playback-state')
+    sp_oauth = oauth2.SpotifyOAuth(
+        credentials.SPOTIPY_CLIENT_ID,
+        credentials.SPOTIPY_CLIENT_SECRET,
+        credentials.SPOTIPY_REDIRECT_URI,
+        scope=SCOPE,
+        cache_path='.spotifycache'
+    )
+
+    if request.GET.get('code'):
+        # If the user grants permission, Spotify will redirect to this URL with a code.
+        token = sp_oauth.get_access_token(request.GET['code'])
+        request.session['token'] = token
+        return redirect('base') # Redirect to your homepage.
+
+    else:
+        # If we don't have a token in the session, redirect the user to Spotify authorization page.
+        auth_url = sp_oauth.get_authorize_url()
+        return redirect(auth_url)
+
 # Login and Logout Views
 def register(request):
     if request.method == 'POST':
