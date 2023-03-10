@@ -503,7 +503,8 @@ CUSTOM BUTTON - for generes
   z-index: 1;
   font-weight: 300;
   font-size: 17px;
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  font-family: Secondary;
+ /* font-family: 'Roboto', 'Segoe UI', sans-serif;*/
   text-transform: uppercase;
   color: var(--color);
   margin: 0;

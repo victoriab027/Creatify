@@ -39,14 +39,13 @@
     <polyline points="1 12 5 1 9 12"></polyline>
     </svg>
 </button>
-
+<br>
 <h2>2. Tune the Audio Features</h2>
 <h5>Each feature comes with a personalized song telling you what high and low values of that are feature are<br>
     Click on the feature to learn more about what it is<br>
 Choose to either enable this feature on your custom playlist or disable and it will not be considered</h5>
 
 
-<!--<button type="button" class="collapsible"><h2>Collapse Genre Selector</h2></button>-->
 {% for slider in sliders %}
     <h3 class="slider">{{slider.name}}</h3>
 
@@ -59,10 +58,6 @@ Choose to either enable this feature on your custom playlist or disable and it w
         <span class="toggle-text off">DISABLED</span>
       </label>
     </div>
-<!--
-        <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider.name}}" checked> 
-          <span class="tooltiptext">Enable/Disable {{slider.name}}</span>
-        </div>-->
         <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
           <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
         <br>
@@ -80,6 +75,7 @@ Choose to either enable this feature on your custom playlist or disable and it w
                        
         </div>
 {% endfor %}
+<br>
 <br>
 <br>
 

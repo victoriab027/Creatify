@@ -155,13 +155,9 @@ def find_and_filter(settings, genres_list, sp):
     #FILTERING
     for index, setting in settings.iterrows():
         if setting["On"]:
-            if setting["Level"] > 0:
-                song_df = song_df[(song_df[setting["Name"]] >= song_df[setting["Name"]].mean())]
-            elif setting["Level"] < 0:
-                song_df = song_df[(song_df[setting["Name"]] <= song_df[setting["Name"]].mean())]
-            else: #medium
+                level = setting["Level"]/50 
                 var = song_df[setting["Name"]].var()
-                song_df = song_df[(song_df[setting["Name"]] >= song_df[setting["Name"]].mean()-2*var) & (song_df[setting["Name"]] <= song_df[setting["Name"]].mean()+2*var)]
+                song_df = song_df[(song_df[setting["Name"]] >= level*song_df[setting["Name"]].mean()-2*var) & (song_df[setting["Name"]] <= level*song_df[setting["Name"]].mean()+2*var)]
     return song_df
 
 def gather_songs(sp, generes_list, settings_df, goal):
