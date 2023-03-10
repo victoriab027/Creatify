@@ -10,7 +10,7 @@
     {% block styles %}{% endblock %}
   </head>
   <body> 
-    {% if showbanner %}
+    {% if showheader %}
     <header>
       <nav>
         <ul>
@@ -26,6 +26,7 @@
       {% block content %}
       {% endblock %}
     </main>
+    {% if showheader %}
     <div class='bottom'>
       <a href="mailto:o.a.reinhart@wustl.edu"> 
         <img src="{% static 'creatify_app/mail_icon.png'%}" alt = "mail icon" class="icon">
@@ -34,5 +35,6 @@
         <img src="{%static 'creatify_app/github-mark-white.png' %}" alt="linkedin logo" class="icon2">
       </a> 
     </div>
+    {% endif %}
   </body>
 </html>
