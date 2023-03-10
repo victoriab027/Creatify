@@ -1,0 +1,107 @@
+@font-face {
+	font-family: Notable;
+	src: url(Notable-Regular.ttf);
+  }
+  @font-face {
+	font-family: Secondary;
+	src: url(Recursive-VariableFont.ttf);
+  }
+  @font-face {
+	font-family: Montserrat;
+	src: url(Montserrat-VariableFont_wght.ttf);
+  }
+
+.intro {
+	height: 100vh;
+	background-size: cover;
+	display: flex;
+	font-family: Secondary;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	text-align: center;
+	}
+h1 {
+	font-size: 50px;
+}
+h2 {
+	color: #204931;
+	margin-top: -20px;
+}
+	
+	
+	.notes-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	}
+	
+	.note {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-image: url('https://www.pngkey.com/png/full/186-1865181_white-music-notes-png-single-music-notes-white.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	animation: float 4s ease-in-out infinite;
+	}
+	
+	.note1 {
+	top: 50%;
+	left: 10%;
+	animation-duration: 5s;
+	}
+	
+	.note2 {
+	top: 20%;
+	left: 30%;
+	}
+	
+	.note3 {
+	top: 70%;
+	left: 60%;
+	animation-duration: 6s;
+	}
+	
+	.note4 {
+	top: 40%;
+	left: 80%;
+	animation-duration: 5.5s;
+	}
+	
+	@keyframes float {
+	0% {
+	transform: translateY(0);
+	}
+	50% {
+	transform: translateY(-20px);
+	}
+	100% {
+	transform: translateY(0);
+	}
+	}
+	.big-btn {
+		color: #fff;
+		background-color: #1f5635;
+		font-size: 14px;
+		line-height: 1;
+		border-radius: 500px;
+		padding: 18px 48px 16px;
+		transition-property: background-color;
+		transition-duration: .3s;
+		border-width: 0;
+		letter-spacing: 2px;
+		min-width: 160px;
+		text-transform: uppercase;
+		white-space: normal;
+		cursor: pointer;
+	}
+	
+	.big-btn:hover {
+		background-color: #4c7b5e;
+	}
+	
