@@ -191,14 +191,14 @@ h3 {
  pointer-events: none;
 }
 .slider-description{
- color: #aaa;
+ color: #011a01;
  font-size: 15px;
  margin-left: 25px;
  cursor: default;
- margin-top: -27px;
  font-weight: 500;
  user-select: none;
 }
+
 #generate_bt{
  border: #000;
  background-color: #435b24;
