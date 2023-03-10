@@ -19,6 +19,8 @@ for (let i = 0; i < coll.length; i++) {
 const filterInput = document.querySelector('#genre-filter');
 const genreTable = document.querySelector('#genre-table');
 const genreButtons = genreTable.querySelectorAll('button');
+const resetButton = document.querySelector('.reset');
+
 filterInput.addEventListener('input', () => {
   const filterText = filterInput.value.toLowerCase();
 
@@ -35,6 +37,24 @@ filterInput.addEventListener('input', () => {
     }
   });
 });
+
+resetButton.addEventListener('click', () => {
+  filterInput.value = '';
+  genreButtons.forEach(button => {
+    const td = button.parentNode;
+    td.style.display = '';
+  });
+});
+
+
+// LOADER
+window.addEventListener('load', function() {
+  var loadingOverlay = document.getElementById('loading-overlay');
+  loadingOverlay.style.display = 'none';
+});
+
+
+
 // BUTTON WORK
 const genre_buttons = document.querySelectorAll('.btn');
 const newButton = document.querySelector('#new-btn');

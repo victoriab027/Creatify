@@ -7,28 +7,46 @@
 {% endblock %}
 
 {% block content %}
-<h3>Your 
-  {% for genre in selected_genres%}  
-  {{genre}} 
-  {%endfor%} 
-  Playlist</h3> 
-<h4>
-  Attributes: 
-  {% for att in slider_values %} 
-  {% if not att.Level == 'skip' %} 
-    {{ att.Level }} 
-  {% endif %} 
-{% endfor %}
-</h4>
-<div id="grid">
-    <div class="left"> 
-        <h2>Suggested Names</h2>
+<div id="loading-overlay">
+  <div class="loading-text">Loading Creatify...</div>
+  <br>
+  <br>
+  <div class="loader"></div>
+</div>
+<!-- rest of the website -->
+
+
+<h1>Creatify</h1>
+
+<div id="grid" class = "grid">
+    <div class="words"> 
+ 
+      <h2>OMG it's here!</h2>
+      <h3>Looks pretty good for a  
+        {% for genre in selected_genres%}  
+        {{genre}} 
+        {%endfor%} 
+        playlist....</h3> 
+<br>
+      <h3>Just a reminder... You picked the following feature guides:
         <ul>
-            <li>name 1</li>
-        </ul>
+         {% for att in slider_values %} 
+         <li> {% if not att.Level == 'skip' %} 
+          {{ att.Level }} 
+        {% endif %} </li>
+      {% endfor %}
+    </ul>
+    </h3>
+        <h2>We thought of some other killer names...</h2>
+        <h3>Click on one of them to change it</h3>
+        <!-- TODO: make this into a for loop like above-->
+          <button onclick = "toggleButtonClass(this)" class = "button_active">Guided by Angles</button><br>
+          <button onclick = "toggleButtonClass(this)">Guided by Angles</button><br>
+          <button onclick = "toggleButtonClass(this)">Guided by Angles</button><br>
+          <button onclick = "toggleButtonClass(this)">Guided by Angles</button>
     </div>
-    <div class="right">
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6H4N8Nw1UHrwBwfw9UGFRn?utm_source=generator" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="playlist">
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6H4N8Nw1UHrwBwfw9UGFRn?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="20px" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

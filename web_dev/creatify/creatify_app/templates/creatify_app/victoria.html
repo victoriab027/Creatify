@@ -8,8 +8,16 @@
   {% endblock %}
 
 {% block content %}
+<!-- loading content -->
+<div id="loading-overlay">
+  <div class="loading-text">Loading Creatify...</div>
+  <br>
+  <br>
+  <div class="loader"></div>
+</div>
+<!-- rest of the website -->
+
 <h1>Creatify</h1>
-<!-- <h4>Recommend Less. Discover More.</h4> -->
 
 <h2>1. Select Genres for Your Playlist</h2>
     <!-- 
@@ -103,7 +111,14 @@ Your highest and lowest recent song of each feature are linked below</h5>
 <br>
 
 
+<h2>3. Choose the Minimum Number of Songs in the Playlist</h2>
+<h5>You must have at least 5 and at most 50</h5>
 
+<!-- BUTTON SOURECE: https://uiverse.io/Allyhere/slippery-fly-8 -->
+<p class="input-container">
+  <input class="input-field" id="goal" name="goal" placeholder="Enter a number" type="number" min="5" max="50">
+  <label for="goal" class="input-label"></label>
+</p>
 
 <div class = "center">
   <button id = "iloveowen" class="learn-more">

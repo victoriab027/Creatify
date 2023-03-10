@@ -10,6 +10,9 @@
 	font-family: Montserrat;
 	src: url(Montserrat-VariableFont_wght.ttf);
   }
+body {
+	user-select: none;
+}
 
 .intro {
 	height: 100%;
@@ -22,6 +25,7 @@
 	align-items: center;
 	color: white;
 	text-align: center;
+	margin-top: 200px;
 	}
 h1 {
 	font-size: 50px;
@@ -105,4 +109,25 @@ h2 {
 	.big-btn:hover {
 		background-color: #4c7b5e;
 	}
-	
+
+a{
+	color: #fff;
+	background-color: #1f5635;
+	font-size: 14px;
+	line-height: 1;
+	text-decoration: none;
+	border-radius: 500px;
+	padding: 18px 48px 16px;
+	transition-property: background-color;
+	transition-duration: .3s;
+	border-width: 0;
+	letter-spacing: 2px;
+	min-width: 160px;
+	text-transform: uppercase;
+	white-space: normal;
+	cursor: pointer;
+}
+
+a:hover {
+	background-color: #4c7b5e;
+}
