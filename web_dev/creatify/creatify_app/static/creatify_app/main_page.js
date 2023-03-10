@@ -120,7 +120,10 @@ function send_selections() {
   genre_buttons.forEach(button => {
     genres.push(button.textContent);
   });
-  const slider_values = [];
+  if (genres.length < 3) {
+    alert('Please select at least three genres.');
+    return;
+  }const slider_values = [];
   $('.slider-wrapper').each(function() {
     let slider_name = $(this).attr('id');
     slider_name = slider_name.substring(7);
@@ -180,3 +183,12 @@ function arrangeButtons() {
 
 window.addEventListener('load', arrangeButtons);
 window.addEventListener('resize', arrangeButtons);
+
+//input coeherce to numbers
+function isNumeric(evt) {
+  var charCode = (evt.which) ? evt.which : event.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
+}

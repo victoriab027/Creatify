@@ -275,6 +275,7 @@ Source: https://alvarotrigo.com/blog/toggle-switch-css/
   background-color: rgb(154, 154, 154);
   color: white;
   transition: .4s;
+  user-select: none;
   border-radius: 30px;
 }
 
@@ -581,6 +582,7 @@ CUSTOM BUTTON - for generes
   transition: all 0.2s ease;
   border: none;
   background: none;
+  user-select: none;
  }
  
  .cta:before {
@@ -603,6 +605,7 @@ CUSTOM BUTTON - for generes
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #234567;
+  user-select: none;
  }
  
  .cta svg {

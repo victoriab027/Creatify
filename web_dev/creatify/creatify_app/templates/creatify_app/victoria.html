@@ -75,10 +75,8 @@ Choose to either enable this feature on your custom playlist or disable and it w
                        
         </div>
 {% endfor %}
-<br>
-<br>
-<br>
-
+<h2>What's the minimum number of songs?</h2>
+<input placeholder="Number of Songs" type='text' pattern="[5-9]|[1-4][0-9]|50" onkeypress="return isNumeric(event)" ></input>
 <div class = "center">
     <button data-text="Awesome" class="gen_button">
       <span class="actual-text">&nbsp;GENERATE PLAYLIST&nbsp;</span>
