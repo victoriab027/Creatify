@@ -36,6 +36,7 @@ filterInput.addEventListener('input', () => {
   });
 });
 
+
 // BUTTON WORK
 const genre_buttons = document.querySelectorAll('.btn');
 const newButton = document.querySelector('#new-btn');
