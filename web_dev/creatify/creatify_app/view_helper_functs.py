@@ -32,40 +32,41 @@ def convert_slider_vals(slider_list):
     if not slider['On']:
       slider["Level"] = "skip"
       continue
+    
     if 'Danceability' in slider['name']:
-      if slider["Level"] == -1:
+      if slider["Level"] <25:
         slider["Level"] = "Low"+ f" {slider['name']}"
-      elif slider["Level"] == 0:
+      elif slider["Level"] <75:
         slider["Level"] = "Medium"+ f" {slider['name']}"
-      elif slider['Level'] == 1:
+      elif slider['Level'] >= 75:
         slider["Level"] = "High"+ f" {slider['name']}"
     elif 'Energy' in slider['name']:
-      if slider["Level"] == -1:
+      if slider["Level"] <25:
         slider["Level"] = "Calm"+ f" {slider['name']}"
-      elif slider["Level"] == 0:
+      elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
-      elif slider['Level'] == 1:
+      elif slider['Level'] >= 75:
         slider["Level"] = "Energetic"
     elif 'Tempo' in slider['name']:
-      if slider["Level"] == -1:
+      if slider["Level"] <25:
         slider["Level"] = "Slower"+ f" {slider['name']}"
-      elif slider["Level"] == 0:
+      elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
-      elif slider['Level'] == 1:
+      elif slider['Level'] >= 75:
         slider["Level"] = "Faster"+ f" {slider['name']}"
     elif 'Instrumentalness' in slider['name']:
-      if slider["Level"] == -1:
+      if slider["Level"] <25:
         slider["Level"] = "Vocal"
-      elif slider["Level"] == 0:
+      elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
-      elif slider['Level'] == 1:
+      elif slider['Level'] >= 75:
         slider["Level"] = "Instrumental"
     elif 'Valence' in slider['name']:
-      if slider["Level"] == -1: #Meloncholic
+      if slider["Level"] <25: #Meloncholic
         slider["Level"] = "Meloncholic"
-      elif slider["Level"] == 0:
+      elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
-      elif slider['Level'] == 1:
+      elif slider['Level'] >= 75:
         slider["Level"] = "Cheery"
   return slider_list
 

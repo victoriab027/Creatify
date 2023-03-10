@@ -35,18 +35,14 @@ filterInput.addEventListener('input', () => {
     }
   });
 });
-
-
 // BUTTON WORK
 const genre_buttons = document.querySelectorAll('.btn');
 const newButton = document.querySelector('#new-btn');
 const genre_table = document.querySelector('#genre-table');
-
 let hideButtons = true;
-
 newButton.addEventListener('click', () => {
   genre_buttons.forEach(button => {
-    if (!button.classList.contains('active')) {
+    if (!button.classList.contains('active')) { //active
       button.parentElement.style.display = hideButtons ? 'none' : '';
     }
   });
@@ -59,18 +55,12 @@ newButton.addEventListener('click', () => {
     genre_table.style.display = 'flex';
   }
 });
-
 genre_buttons.forEach(button => {
   button.addEventListener('click', () => {
     button.classList.toggle('active');
     genre_table.style.display = 'flex';
   });
 });
-
-
-
-
-
 // hide desc and grey out slider with checkbox
 $('.custom-checkbox').change(function() {
   var sliderId = $(this).attr('id');
@@ -124,7 +114,7 @@ sliderHeaders.forEach(header => {
 });
 // send data to view
 function send_selections() {
-  const genre_buttons = document.querySelectorAll('button.clicked');
+  const genre_buttons = document.querySelectorAll('.btn.active');
   const genres = [];
   genre_buttons.forEach(button => {
     genres.push(button.textContent);
@@ -134,7 +124,7 @@ function send_selections() {
     let slider_name = $(this).attr('id');
     slider_name = slider_name.substring(7);
     if (!$(this).hasClass('greyed-out')) {
-      const slider_value = parseInt($(this).find('input.slider').val())-2;
+      const slider_value = parseInt($(this).find('input.slider').val());
       slider_values.push({
         'name': slider_name,
         'On': true,
@@ -164,7 +154,7 @@ function send_selections() {
   });
 }
 //add send_select to button
-const $generate_button = $('#generate_bt');
+const $generate_button = $('.gen_button');
 $generate_button.click(send_selections);
 
 
