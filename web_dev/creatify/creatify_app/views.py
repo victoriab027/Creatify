@@ -164,7 +164,7 @@ def login_view(request):
                 return redirect('home')
     else:
         form = AuthenticationForm()
-    return render(request, 'creatify_app/base.html', {'form': form})
+    return render(request, 'creatify_app/login.html', {'form': form})
 def logout_view(request):
     logout(request)
     return redirect('login_view')
