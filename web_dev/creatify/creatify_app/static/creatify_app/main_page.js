@@ -62,11 +62,12 @@ genre_buttons.forEach(button => {
   });
 });
 // hide desc and grey out slider with checkbox
-$('.custom-checkbox').change(function() {
+$("input:checkbox").change(function() {
   var sliderId = $(this).attr('id');
   if ($(this).is(':checked')) {
     $('#slider-' + sliderId).removeClass('greyed-out');
     $('#slider-' + sliderId).find('*').removeClass('greyed-out');
+    $('#desc-' + sliderId).show();
   } else {
     $('#slider-' + sliderId).addClass('greyed-out');
     $('#slider-' + sliderId).find('*').addClass('greyed-out');
@@ -156,7 +157,6 @@ function send_selections() {
 //add send_select to button
 const $generate_button = $('.gen_button');
 $generate_button.click(send_selections);
-
 
 // button wrapping
 function arrangeButtons() {

@@ -102,7 +102,6 @@ h3 {
  font-size: 40px;
  color: white;
  text-align: center;
- cursor: help;
  user-select: none;
  font-family: Notable;
  margin-block-end: 5px;
@@ -401,6 +400,7 @@ input[type="range"] {
   text-align: center;
   margin: auto;
   -webkit-appearance: none;
+  appearance: none;
   position: relative;
   overflow: hidden;
   height: 40px;
