@@ -115,7 +115,7 @@ def result_view(request):
     else:
       selected_genres = request.session.get('selected_genres')
       slider_values = request.session.get('slider_values')
-      context = {'selected_genres': selected_genres, 'slider_values': slider_values}
+      context = {'selected_genres': selected_genres, 'slider_values': slider_values, 'showbanner': True}
       print(context)
       return render(request, 'creatify_app/results.html', context)
 # get spotify authorization
