@@ -9,7 +9,7 @@
 
 {% block content %}
 <h1>Creatify</h1>
-<h4>Recommend Less. Discover More.</h4>
+<!-- <h4>Recommend Less. Discover More.</h4> -->
 
 <h2>1. Select Genres for Your Playlist</h2>
     <!-- 
@@ -42,8 +42,8 @@
 <br>
 <h2>2. Tune the Audio Features</h2>
 <h5>Each feature comes with a personalized song telling you what high and low values of that are feature are<br>
-    Click on the feature to learn more about what it is<br>
-Choose to either enable this feature on your custom playlist or disable and it will not be considered</h5>
+Choose to either enable this feature on your custom playlist or disable and it will not be considered<br>
+Your highest and lowest recent song of each feature are linked below</h5>
 
 
 {% for slider in sliders %}
@@ -51,17 +51,25 @@ Choose to either enable this feature on your custom playlist or disable and it w
 
      <!-- New Toggle Button -->
      <div class = "center">
-     <label class="switch">
-        <input type="checkbox" checked id="{{slider.name}}">
-        <span class="toggle-slider"></span>
-        <span class="toggle-text on">ENABLED</span>
-        <span class="toggle-text off">DISABLED</span>
-      </label>
+        <div class="slider-description" id="desc-{{slider.name}}">{{slider.desc}}
+        </div>
+        <label class="switch">
+          <input type="checkbox" checked id="{{slider.name}}">
+          <span class="toggle-slider"></span>
+          <span class="toggle-text on">ENABLED</span>
+          <span class="toggle-text off">DISABLED</span>
+        </label>
     </div>
-        <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
-          <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
+    <br>
+      <div class ="left">
+          <iframe style="border-radius:12px; margin: 10px;" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class = "right">
+          <iframe style="border-radius:12px; margin: 10px;" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
         <br>
-    <div class="slider-description" id="desc-{{slider.name}}">{{slider.desc}}</div>
+        <br><br><br><br><br><br><br><br>
+
         {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
         <div class="slider-wrapper" id="slider-{{slider.name}}" >
             <div class="labels">
@@ -75,12 +83,19 @@ Choose to either enable this feature on your custom playlist or disable and it w
                        
         </div>
 {% endfor %}
-<h2>What's the minimum number of songs?</h2>
-<input placeholder="Number of Songs" type='text' pattern="[5-9]|[1-4][0-9]|50" onkeypress="return isNumeric(event)" ></input>
+<br>
+<br>
+<br>
+
+
+
+
 <div class = "center">
-    <button data-text="Awesome" class="gen_button">
-      <span class="actual-text">&nbsp;GENERATE PLAYLIST&nbsp;</span>
-      <span class="gen_hover-text" aria-hidden="true">&nbsp;GENERATE PLAYLIST&nbsp;</span>
+  <button id = "iloveowen" class="learn-more">
+    <span class="circle" aria-hidden="true">
+    <span class="icon arrow"></span>
+    </span>
+    <span class="button-text">Generate Playlist</span>
   </button>
 </div>
 

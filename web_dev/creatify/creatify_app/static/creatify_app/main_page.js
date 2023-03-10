@@ -67,11 +67,9 @@ $("input:checkbox").change(function() {
   if ($(this).is(':checked')) {
     $('#slider-' + sliderId).removeClass('greyed-out');
     $('#slider-' + sliderId).find('*').removeClass('greyed-out');
-    $('#desc-' + sliderId).show();
   } else {
     $('#slider-' + sliderId).addClass('greyed-out');
     $('#slider-' + sliderId).find('*').addClass('greyed-out');
-    $('#desc-' + sliderId).hide();
   }
 });
 // opacity and font weight depending on slider position/value
@@ -158,7 +156,7 @@ function send_selections() {
   });
 }
 //add send_select to button
-const $generate_button = $('.gen_button');
+const $generate_button = $('#iloveowen');
 $generate_button.click(send_selections);
 
 // button wrapping

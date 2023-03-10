@@ -21,3 +21,14 @@ body{
     margin-left: 10px;
   }
   
+  .center {
+    text-align: center;
+  }
+  .left {
+    position: absolute; /* set the left-aligned span to absolute positioning */
+  left: 0; 
+  }
+  .right {
+    position: absolute; /* set the right-aligned span to absolute positioning */
+  right: 0;
+  }

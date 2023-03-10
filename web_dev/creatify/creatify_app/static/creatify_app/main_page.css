@@ -19,23 +19,31 @@ body {
 /* Basic Words */
 h1 {
   font-family: Notable;
-  color: #363537;
+  /* background-color: #363537; */
+  width: 100%;
+  color: #0B6E4F;
   text-align: center;
   font-size: 85px;
   user-select: none;
   margin-block-start: -10px;
-  margin-block-end: -10px;
+  margin-block-end: 10px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px white;
 }
 h4 {
+  margin-top:-18px;
   font-family: Secondary;
-  color: white;
+  color: #204931;
   text-align: center;
-  font-size: 25px;
+  font-size: 23px;
   user-select: none;
+  text-shadow: 1px 1px white;
 }
 h2 {
+
   font-family: Secondary;
   color: white;
+  text-shadow: 2px 2px #204931;
   user-select: none;
   margin-block-end: 0px;
   font-size: 30px;
@@ -71,18 +79,6 @@ td{
  text-align: center;
 }
 
-/*.clicked{
- background-color: #00A97F;
- padding: 20px 15px;
- font-size: 14px;
- color: whitesmoke;
- border-radius: 10px;
- letter-spacing: 1px;
- font-weight: 700;
- text-transform: uppercase;
- opacity: 1;
- text-align: center;
-}*/
 .collapsible {
   color: #aaa;
   cursor: pointer;
@@ -108,6 +104,7 @@ h3 {
  user-select: none;
  font-family: Notable;
  margin-block-end: 5px;
+ text-shadow: 2px 2px #204931;
 }
 .subtext{
   font-size: large;
@@ -164,6 +161,9 @@ h3 {
  position: relative;
  display: inline-block;
 }
+.inline {
+  display: inline;
+}
 .tooltip .tooltiptext {
  font-size: small;
  visibility: hidden;
@@ -193,11 +193,13 @@ h3 {
  pointer-events: none;
 }
 .slider-description{
- color: #011a01;
+ color: white;
+ margin-top: 10px;
+ font-family: Montserrat;
+ font-weight: 300;
  font-size: 15px;
  margin-left: 25px;
  cursor: default;
- font-weight: 500;
  user-select: none;
 }
 
@@ -296,11 +298,11 @@ Source: https://alvarotrigo.com/blog/toggle-switch-css/
 }
 
 input:checked + .toggle-slider {
-  background-color: #435b24;
+  background-color: #204931;
 }
 
 input:focus + .toggle-slider {
-  box-shadow: 0 0 1px #435b24;
+  box-shadow: 0 0 1px #204931;
 }
 
 input:checked + .toggle-slider:before {
@@ -426,7 +428,7 @@ input[type="range"] {
   width: 20px; /* 1 */
   height: 40px;
   background: #fff;
-  box-shadow: -800px 0 0 800px #435b24; /* 2 */
+  box-shadow: -800px 0 0 800px #204931; /* 2 */
   border: 2px solid #999; /* 1 */
   border-radius: 3px; 
 }
@@ -440,12 +442,12 @@ input[type="range"] {
   width: 200px;
   border: 3px solid #999;
   border-radius: 0 !important;
-  box-shadow: -200px 0 0 200px #4e731e;
+  box-shadow: -200px 0 0 200px #204931;
   box-sizing: border-box;
 }
 
 ::-ms-fill-lower { 
-  background: #4e731e;
+  background: #16815f;
 }
 
 ::-ms-thumb { 
@@ -494,7 +496,7 @@ CUSTOM BUTTON - for generes
 }
 
 .btn {
-  --color: #4e731e;
+  --color: #16815f;
   --color2: rgb(10, 25, 30);
   padding: 0.8em 1.75em;
   background-color: transparent;
@@ -537,19 +539,19 @@ CUSTOM BUTTON - for generes
  
  .btn:hover::before {
   transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
-  background-color: #4e731e;
+  background-color: #16815f;
   color: white;
  }
  
  .btn:hover::after {
   transform: skew(45deg) translate(-50%, -50%);
-  background-color: #4e731e;
+  background-color: #16815f;
   color: white;
  }
  
  .btn:hover {
   color: var(--color2);
-  background-color: #4e731e;
+  background-color: #16815f;
   color: white;
  }
  
@@ -559,7 +561,7 @@ CUSTOM BUTTON - for generes
   --color: #ffffff;
   --color2: rgb(10, 25, 30);
   padding: 0.8em 1.75em;
-  background-color: #435b24;
+  background-color: #0B6E4F;
   border-radius: 6px;
   border: .3px solid var(--color);
   transition: .5s;
@@ -595,7 +597,7 @@ CUSTOM BUTTON - for generes
   left: 0;
   display: block;
   border-radius: 50px;
-  background: #b1dae7;
+  background: #16815f;
   width: 45px;
   height: 45px;
   transition: all 0.3s ease;
@@ -618,7 +620,7 @@ CUSTOM BUTTON - for generes
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke: #234567;
+  stroke: #204931;
   stroke-width: 2;
   transform: translateX(-5px);
   transition: all 0.3s ease;
@@ -626,7 +628,7 @@ CUSTOM BUTTON - for generes
  
  .cta:hover:before {
   width: 100%;
-  background: #b1dae7;
+  background: #16815f;
  }
  
  .cta:hover svg {
@@ -648,39 +650,92 @@ CUSTOM BUTTON - for generes
   border: none;
 }
 /* button styling */
-.gen_button {
-  --border-right: 6px;
-  --text-stroke-color: rgba(255, 255, 255, 0.7);
-  --animation-color: #FAF3DD;
-  --fs-size: 2em;
-  letter-spacing: 3px;
-  text-decoration: none;
-  font-size: var(--fs-size);
-  font-family: Notable;
+button {
   position: relative;
-  text-transform: uppercase;
-  color: transparent;
-  background-color: rgb(67, 91, 36);
-  -webkit-text-stroke: 1px var(--text-stroke-color);
-}
-/* this is the text, when you hover on button */
-.gen_hover-text {
-  background-color: rgba(67, 91, 36,0.5);
-  --animation-color: #FAF3DD;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+ }
+ 
+ button.learn-more {
+  width: 16rem;
+  height: auto;
+  color: white;
+ }
+ 
+ button.learn-more .circle {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #16815f;
+  border-radius: 1.625rem;
+ }
+ 
+ button.learn-more .circle .icon {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
   position: absolute;
-  box-sizing: border-box;
-  content: attr(data-text);
-  color: rgb(200, 213, 185);
-  width: 0%;
-  inset: 0;
-  border-right: var(--border-right) solid rgb(200, 213, 185);
-  overflow: hidden;
-  transition: 0.5s;
-  -webkit-text-stroke: 1px rgb(200, 213, 185);
-
-}
-/* hover */
-.gen_button:hover .gen_hover-text {
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+ }
+ 
+ button.learn-more .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+ }
+ 
+ button.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.29rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+ }
+ 
+ button.learn-more .button-text {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 1.85rem;
+  color: white;
+  font-weight: 500;
+  line-height: 1.6;
+  font-family: Montserrat;
+  text-align: center;
+  text-transform: uppercase;
+ }
+ 
+ button:hover .circle {
   width: 100%;
-  filter: drop-shadow(0 0 23px var(--animation-color))
-}
+ }
+ 
+ button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+ }
+ 
+ button:hover .button-text {
+  color: #fff;
+ }
