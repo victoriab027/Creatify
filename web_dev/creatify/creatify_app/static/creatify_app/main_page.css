@@ -6,6 +6,11 @@
   font-family: Secondary;
   src: url(Recursive-VariableFont.ttf);
 }
+@font-face {
+  font-family: Montserrat;
+  src: url(Montserrat-VariableFont_wght.ttf);
+}
+
 
 
 /* Basic Words */
@@ -14,21 +19,42 @@ h1 {
   color: #363537;
   text-align: center;
   font-size: 85px;
+  user-select: none;
+  margin-block-start: -10px;
+  margin-block-end: -10px;
 }
 h4 {
   font-family: Secondary;
   color: white;
   text-align: center;
   font-size: 25px;
+  user-select: none;
 }
 h2 {
   font-family: Secondary;
   color: white;
+  user-select: none;
+  margin-block-end: 0px;
+  font-size: 30px;
+}
+h5 {
+  margin-top: 5px;
+  margin-left: 15px;
+  font-family: Montserrat;
+  line-height: 1.5em;
+  font-weight: 300;
+  color: white;
+  user-select: none;
+  margin-block-end: 0px;
+  font-size: 18px;
 }
 
 td{
  text-align: center;
+ padding: 0px;
+ margin: 0px;
 }
+
 .unclicked{
  background-color: #444554;
  padding: 20px 10px;
@@ -41,9 +67,7 @@ td{
  opacity: .8;
  text-align: center;
 }
-button:hover{
- background-color: #018b69;
-}
+
 /*.clicked{
  background-color: #00A97F;
  padding: 20px 15px;
@@ -75,12 +99,13 @@ button:hover{
   transition: max-height 0.25s ease-out;
 }
 h3 {
- font-size: xx-large;
+ font-size: 40px;
  color: white;
  text-align: center;
  cursor: help;
  user-select: none;
  font-family: Notable;
+ margin-block-end: 5px;
 }
 .subtext{
   font-size: large;
@@ -88,23 +113,36 @@ h3 {
   display: inline-block;
   cursor:default;
 }
-
+.labels{
+  position: relative; /* set the container to relative positioning */
+  /*overflow: hidden;  clears float */
+  text-align: center; /* center text within the div */
+  font-size: 20px;
+  user-select: none;
+}
 .low {
+  position: absolute; /* set the left-aligned span to absolute positioning */
+ left: 0; 
  color: #363537;
  opacity: .6;
  cursor:default;
  font-family: Secondary;
 }
 .medium {
+  display: inline-block; /* display the center-aligned span as an inline block element */
+  left: 50%; /* position the center-aligned span in the center of the container */
+  /*transform: translateX(-50%); /* move the center-aligned span to the left by half of its own width */
  color: #363537;
  opacity: .8;
  cursor:default;
  font-weight: 700;
- margin-bottom: -20px;
- margin-right: 3px;
+ /*margin-bottom: -20px;
+ margin-left: 45%;*/
  font-family: Secondary;
 }
 .high {
+  position: absolute; /* set the right-aligned span to absolute positioning */
+  right: 0;
  color: #363537;
  opacity: .4;
  cursor:default;
@@ -168,7 +206,7 @@ h3 {
  opacity: .7;
  color:white;
  padding: 20px;
- margin-top: 30px;
+ margin-top: 50px;
  cursor: pointer;
  border-radius: 40px;
  transition: 0.3s;
@@ -208,15 +246,16 @@ h3 {
 Source: https://alvarotrigo.com/blog/toggle-switch-css/ 
 
 */
-/* The switch - the box around the slider */
+/* The switch - the box around the  */
 .switch {
-  font-size: 17px;
+  font-size: 12px;
   text-align: center;
   position: relative;
   display: inline-block;
-  width: 9em;
+  width: 8em;
   height: 2em;
   overflow: hidden;
+  margin-block-end: -20px;
 }
 
 /* Hide default HTML checkbox */
@@ -262,7 +301,7 @@ input:focus + .toggle-slider {
 }
 
 input:checked + .toggle-slider:before {
-  transform: translateX(6.8em);
+  transform: translateX(5.5em);
 }
 
 .switch .toggle-text {
@@ -357,6 +396,7 @@ CUSTOM SLIDER
 Source: https://codepen.io/thehonestape/pen/DRpEGX
 
 */
+
 input[type="range"] { 
   text-align: center;
   margin: auto;
@@ -366,11 +406,12 @@ input[type="range"] {
   height: 40px;
   width: 100%;
   cursor: pointer;
-  border-radius: 0; /* iOS */
+  border-radius: 5px; 
 }
 
 ::-webkit-slider-runnable-track {
   background: #ddd;
+  
 }/*
  * 1. Set to 0 width and remove border for a slider without a thumb
  * 2. Shadow is negative the full width of the input and has a spread 
@@ -383,6 +424,7 @@ input[type="range"] {
   background: #fff;
   box-shadow: -800px 0 0 800px #435b24; /* 2 */
   border: 2px solid #999; /* 1 */
+  border-radius: 3px; 
 }
 
 ::-moz-range-track {
@@ -394,12 +436,12 @@ input[type="range"] {
   width: 200px;
   border: 3px solid #999;
   border-radius: 0 !important;
-  box-shadow: -200px 0 0 200px #435b24;
+  box-shadow: -200px 0 0 200px #4e731e;
   box-sizing: border-box;
 }
 
 ::-ms-fill-lower { 
-  background: #435b24;
+  background: #4e731e;
 }
 
 ::-ms-thumb { 
@@ -431,8 +473,24 @@ input[type="range"] {
 /*
 CUSTOM BUTTON - for generes
 */
+#genre-table-container {
+  margin-top: 0px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+#genre-table {
+  margin: 0 auto;
+  white-space: nowrap;
+}
+
+#genre-table td {
+  display: inline-block;
+  white-space: normal;
+}
+
 .btn {
-  --color: #00A97F;
+  --color: #4e731e;
   --color2: rgb(10, 25, 30);
   padding: 0.8em 1.75em;
   background-color: transparent;
@@ -448,6 +506,8 @@ CUSTOM BUTTON - for generes
   font-family: 'Roboto', 'Segoe UI', sans-serif;
   text-transform: uppercase;
   color: var(--color);
+  margin: 0;
+  margin-left: 0px;
  }
  
  .btn::after, .btn::before {
@@ -472,17 +532,20 @@ CUSTOM BUTTON - for generes
  
  .btn:hover::before {
   transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
-  background-color: #00A97F
+  background-color: #4e731e;
+  color: white;
  }
  
  .btn:hover::after {
   transform: skew(45deg) translate(-50%, -50%);
-  background-color: #00A97F;
+  background-color: #4e731e;
+  color: white;
  }
  
  .btn:hover {
   color: var(--color2);
-  background-color: #00A97F;
+  background-color: #4e731e;
+  color: white;
  }
  
  .active {
@@ -491,7 +554,7 @@ CUSTOM BUTTON - for generes
   --color: #ffffff;
   --color2: rgb(10, 25, 30);
   padding: 0.8em 1.75em;
-  background-color: #00A97F;
+  background-color: #435b24;
   border-radius: 6px;
   border: .3px solid var(--color);
   transition: .5s;
@@ -570,33 +633,44 @@ CUSTOM BUTTON - for generes
   transform: scale(0.95);
  }
 
+ .button {
+  margin: 0;
+  height: auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+}
 /* button styling */
 .gen_button {
   --border-right: 6px;
-  --text-stroke-color: rgba(255,255,255,0.6);
-  --animation-color: #37FF8B;
+  --text-stroke-color: rgba(255, 255, 255, 0.7);
+  --animation-color: #FAF3DD;
   --fs-size: 2em;
   letter-spacing: 3px;
   text-decoration: none;
   font-size: var(--fs-size);
-  font-family: "Arial";
+  font-family: Notable;
   position: relative;
   text-transform: uppercase;
   color: transparent;
+  background-color: rgb(67, 91, 36);
   -webkit-text-stroke: 1px var(--text-stroke-color);
 }
 /* this is the text, when you hover on button */
 .gen_hover-text {
+  background-color: rgba(67, 91, 36,0.5);
+  --animation-color: #FAF3DD;
   position: absolute;
   box-sizing: border-box;
   content: attr(data-text);
-  color: var(--animation-color);
+  color: rgb(200, 213, 185);
   width: 0%;
   inset: 0;
-  border-right: var(--border-right) solid var(--animation-color);
+  border-right: var(--border-right) solid rgb(200, 213, 185);
   overflow: hidden;
   transition: 0.5s;
-  -webkit-text-stroke: 1px var(--animation-color);
+  -webkit-text-stroke: 1px rgb(200, 213, 185);
+
 }
 /* hover */
 .gen_button:hover .gen_hover-text {

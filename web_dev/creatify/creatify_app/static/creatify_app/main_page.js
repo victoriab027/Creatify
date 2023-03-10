@@ -1,8 +1,4 @@
 // toggle genres
-function toggleButtonClass(button) {
-    button.classList.toggle('btn');
-    button.classList.toggle('active');
-}
 function toggleButtonClass_cta(button) {
   button.classList.toggle('cta');
   button.classList.toggle('cta_active');
@@ -39,6 +35,41 @@ filterInput.addEventListener('input', () => {
     }
   });
 });
+
+// BUTTON WORK
+const genre_buttons = document.querySelectorAll('.btn');
+const newButton = document.querySelector('#new-btn');
+const genre_table = document.querySelector('#genre-table');
+
+let hideButtons = true;
+
+newButton.addEventListener('click', () => {
+  genre_buttons.forEach(button => {
+    if (!button.classList.contains('active')) {
+      button.parentElement.style.display = hideButtons ? 'none' : '';
+    }
+  });
+  hideButtons = !hideButtons;
+  newButton.firstElementChild.textContent = hideButtons ? 'Collapse unused genres' : 'Expand all genres';
+  newButton.lastElementChild.classList.toggle('rotated');
+  if (hideButtons) {
+    genre_table.style.display = 'block';
+  } else {
+    genre_table.style.display = 'flex';
+  }
+});
+
+genre_buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    button.classList.toggle('active');
+    genre_table.style.display = 'flex';
+  });
+});
+
+
+
+
+
 // hide desc and grey out slider with checkbox
 $('.custom-checkbox').change(function() {
   var sliderId = $(this).attr('id');
@@ -64,15 +95,15 @@ document.querySelectorAll('.slider').forEach(function(sliderInput) {
     document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '400';
     
     // show the span element corresponding to the slider value
-    if (sliderValue == 1) {
+    if (sliderValue < 25) {
       document.getElementById('low-' + event.target.id.split('-')[2]).style.opacity = '.7';
       document.getElementById('low-' + event.target.id.split('-')[2]).style.fontWeight = '600';
-    } else if (sliderValue == 2) {
-      document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
-      document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '700';
-    } else {
+    } else if (sliderValue > 75) {
       document.getElementById('high-' + event.target.id.split('-')[2]).style.opacity = '1';
       document.getElementById('high-' + event.target.id.split('-')[2]).style.fontWeight = '700';
+    } else {
+      document.getElementById('medium-' + event.target.id.split('-')[2]).style.opacity = '.8';
+      document.getElementById('medium-' + event.target.id.split('-')[2]).style.fontWeight = '700';
     }
   });
 });
@@ -136,3 +167,25 @@ const $generate_button = $('#generate_bt');
 $generate_button.click(send_selections);
 
 
+// button wrapping
+function arrangeButtons() {
+  const table = document.getElementById('genre-table');
+  const container = document.getElementById('genre-table-container');
+  let row = table.insertRow();
+  let currentRowWidth = 0;
+  
+  Array.from(table.getElementsByTagName('td')).forEach((td, index) => {
+    row.appendChild(td);
+    currentRowWidth += td.offsetWidth;
+    
+    if (currentRowWidth > container.offsetWidth) {
+      row.removeChild(td);
+      row = table.insertRow();
+      row.appendChild(td);
+      currentRowWidth = td.offsetWidth;
+    }
+  });
+}
+
+window.addEventListener('load', arrangeButtons);
+window.addEventListener('resize', arrangeButtons);

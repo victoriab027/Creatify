@@ -12,6 +12,25 @@ import os
 import openai
 import credentials
 
+''' 
+
+TO RUN:
+
+1. You'll need to pip install openai (and possibly some of the others above)
+2. I'll need to give you my openAI key to store as an ENV variable
+3. You should run: generate_playlist(sp,generes_list,settings_df, goal)
+  a. sp is the spotify thing
+  b. genres_list is a list of the clicked genres
+  c. settings_df is the dataframe we've discussed. Now the values should be 0 -> 100
+  d. goal is the number of minimum songs
+4. This function will return the other suggested playlist titles as a list as well as the id of the new playlist created
+  a. I will need both of these variables for the results page
+
+
+'''
+
+
+
 def get_top_features(sp):
     '''
     This function will return the values seen on the Creatify web_dev with the higest and lowest values. This will assit in 

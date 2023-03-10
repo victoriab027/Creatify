@@ -11,10 +11,7 @@
 <h1>Creatify</h1>
 <h4>Recommend Less. Discover More.</h4>
 
-
-<h2>Genere Selector</h2>
-<div class="content" style="max-height: 965px;">
-
+<h2>1. Select Genres for Your Playlist</h2>
     <!-- 
         Search button from: https://uiverse.io/joe-watson-sbf/shy-snake-4
 
@@ -24,26 +21,30 @@
         <input type="text" id="genre-filter" placeholder="Enter a genre">
     </div>
     <br>
-  <table id ="genre-table">
-    <tr>
-      {% for genre in genres %}
-     <button class="btn" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'> {{ genre }}
-        </button>
-        <!--<td><button class="unclicked" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'>{{ genre }}</button></td>-->
-        {% if forloop.counter|divisibleby:12 %}
-          </tr><tr>
-        {% endif %}
-      {% endfor %}
-    </tr>
-  </table>
-</div>
-<button type = "button" class="cta" onclick = 'toggleButtonClass_cta(this)'>
+<div id="genre-table-container">
+    <table id="genre-table">
+      <tr>
+        {% for genre in genres %}
+        <td><button class="btn" data-genre="{{ genre }}">{{ genre }}</button></td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+  
+  <br>
+<button id="new-btn" class="cta">
     <span>Collapse unused genres</span>
-        <svg viewBox="0 0 10 13" height="20px" width="10px">
-        <path d="M5,1 L5,20"></path>
-        <polyline points="1 12 5 1 9 12"></polyline>
-        </svg>
-  </button>
+    <svg viewBox="0 0 10 13" height="20px" width="10px">
+    <path d="M5,1 L5,20"></path>
+    <polyline points="1 12 5 1 9 12"></polyline>
+    </svg>
+</button>
+
+<h2>2. Tune the Audio Features</h2>
+<h5>Each feature comes with a personalized song telling you what high and low values of that are feature are<br>
+    Click on the feature to learn more about what it is<br>
+Choose to either enable this feature on your custom playlist or disable and it will not be considered</h5>
+
 
 <!--<button type="button" class="collapsible"><h2>Collapse Genre Selector</h2></button>-->
 {% for slider in sliders %}
@@ -62,28 +63,33 @@
         <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider.name}}" checked> 
           <span class="tooltiptext">Enable/Disable {{slider.name}}</span>
         </div>-->
+        <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
+          <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
+        <br>
     <div class="slider-description" id="desc-{{slider.name}}" style="display:none;">{{slider.desc}}</div>
         {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
         <div class="slider-wrapper" id="slider-{{slider.name}}" >
-            <span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
             <div class="labels">
               <span class="low" id="low-{{slider.name}}">{{slider.low}}</span>
+              <span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
               <span class="high" id="high-{{slider.name}}">{{slider.high}}</span>
             </div>
             <div class = "center">
-                <input type="range" min="0" max="100" value="0" class="slider" id="slider-input-{{slider.name}}"/>
+                <input type="range" min="0" max="100" value="50" class="slider" id="slider-input-{{slider.name}}"/>
             </div>
+                       
         </div>
 {% endfor %}
+<br>
+<br>
 
 <div class = "center">
     <button data-text="Awesome" class="gen_button">
-      <span class="actual-text">&nbsp;GENREATE PLAYLIST&nbsp;</span>
-      <span class="gen_hover-text" aria-hidden="true">&nbsp;GENREATE PLAYLIST&nbsp;</span>
+      <span class="actual-text">&nbsp;GENERATE PLAYLIST&nbsp;</span>
+      <span class="gen_hover-text" aria-hidden="true">&nbsp;GENERATE PLAYLIST&nbsp;</span>
   </button>
-  </div>
+</div>
 
-<div id="center-container"><button id="generate_bt">Generate Playlist</button></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'creatify_app/main_page.js' %}"></script>

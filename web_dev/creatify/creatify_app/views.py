@@ -18,7 +18,7 @@ def vic_view(request):
   {
     "name": "Energy",
     "desc": "Energy measures the intensity and activity based on loudness, timbre, and other factors.",
-    "low":"Calmer",
+    "low":"Calm",
     "medium":"Average",
     "high":"Energetic"
   },
@@ -84,7 +84,7 @@ def baserender(request): #add in top features function
   "desc": "Energy measures the intensity and activity based on loudness, timbre, and other factors.",
   "track_low":songs_dict['energy'][0][14:],
   "track_high":songs_dict['energy'][1][14:],
-  "low":"Calmer",
+  "low":"Calm",
   "medium":"Average",
   "high":"Energetic"
 },
@@ -150,7 +150,7 @@ def convert_slider_vals(slider_list):
         slider["Level"] = "High"+ f" {slider['name']}"
     elif 'Energy' in slider['name']:
       if slider["Level"] == -1:
-        slider["Level"] = "Calmer"+ f" {slider['name']}"
+        slider["Level"] = "Calm"+ f" {slider['name']}"
       elif slider["Level"] == 0:
         slider["Level"] = "Average"+ f" {slider['name']}"
       elif slider['Level'] == 1:
