@@ -133,7 +133,7 @@ def auth_view(request):
         # If the user grants permission, Spotify will redirect to this URL with a code.
         token = sp_oauth.get_access_token(request.GET['code'])
         request.session['token'] = token
-        return redirect('base') # Redirect to your homepage.
+        return redirect('creatify_app:base') # Redirect to your homepage.
 
     else:
         # If we don't have a token in the session, redirect the user to Spotify authorization page.
