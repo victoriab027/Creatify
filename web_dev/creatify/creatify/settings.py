@@ -58,6 +58,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_USE_SESSIONS = True
+
 ROOT_URLCONF = 'creatify.urls'
 
 TEMPLATES = [

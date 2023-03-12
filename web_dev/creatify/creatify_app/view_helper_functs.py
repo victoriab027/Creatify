@@ -90,7 +90,7 @@ def get_top_features(token): # fix so it can take a token instead
         'tempo': [df.loc[df['tempo'].idxmin(), 'uri'], df.loc[df['tempo'].idxmax(), 'uri']]}
   return songs # this returns the above values in min then max order
 
-def generate_playlist(sp,generes_list,settings_df, goal):
+def generate_playlist(token,generes_list,settings, goal):
     '''
     This is the main function that will generate the playlist for the user. It contains queries to the Spotify API as well
     as the OpenAI GPT 3.5 AI which means it can take a second to run! It is ended by creating the playlist and using the 
@@ -117,8 +117,11 @@ def generate_playlist(sp,generes_list,settings_df, goal):
 
     
     '''
-
+    sp = spotipy.Spotify(auth=token)
+    print('begin of generate playlist')
+    settings_df = pd.DataFrame(settings)
     songs = gather_songs(sp,generes_list,settings_df, goal)
+    print('gathered songs')
     input = "The playlist has the following songs:"
     for i in range(len(songs)) and i < 20:
         song_name = songs['track_name'][i]
@@ -135,7 +138,7 @@ def generate_playlist(sp,generes_list,settings_df, goal):
             ]
         ) 
     reccomendation = output['choices'][0]['message']['content']
-    print(reccomendation)
+    print('reccc',reccomendation)
     bullet_points = reccomendation.split('\n\n')[1].split('\n')[0:]
     playlist_titles = [point[2:] for point in bullet_points]
     best_title = playlist_titles[0]
@@ -151,7 +154,7 @@ def generate_playlist(sp,generes_list,settings_df, goal):
     tracks = songs["track_id"]
 
     sp.user_playlist_add_tracks(username, playlist_id=playlist_id, tracks=tracks)
-
+    print('right before return')
     return playlist_titles, playlist_id
 
 
@@ -165,13 +168,24 @@ def generate_playlist(sp,generes_list,settings_df, goal):
 ############################
 def find_and_filter(settings, genres_list, sp):
     #FINDING
-    results = sp.recommendations(seed_genres=genres_list, limit=100)
-    song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
+    search = ''
+    for i in range(len(genres_list)):
+      search += 'genre:'
+      search +=  f'"{genres_list[i]}"'
+      if genres_list[i] != genres_list[-1]:
+        search += ' OR '
+    
+    print(search)
+      
+    results = sp.search(q = search, type = 'track', limit=50, offset = 0)
+    song_features_list = ["artist","album","track_name",  "track_id","Danceability","Energy","Key","Loudness","mode", "Speechiness","Instrumentalness","Liveness","Valence","Tempo", "duration_ms","time_signature"]
     song_df = pd.DataFrame(columns = song_features_list)
     tracks = results["tracks"]
-
+    print("tracks")
+    print(tracks)
     for track in tracks:
         # Create empty dict
+        print(track)
         playlist_features = {}
         playlist_features["artist"] = track["album"]["artists"][0]["name"]
         playlist_features["album"] = track["album"]["name"]
@@ -186,17 +200,29 @@ def find_and_filter(settings, genres_list, sp):
         # Concat the dfs
         track_df = pd.DataFrame(playlist_features, index = [0])
         song_df = pd.concat([song_df, track_df], ignore_index = True)
-    
+        print("track_df")
+        print(track_df)
     #FILTERING
-    for index, setting in settings.iterrows():
-        if setting["On"]:
-                level = setting["Level"]/50 
-                var = song_df[setting["Name"]].var()
-                song_df = song_df[(song_df[setting["Name"]] >= level*song_df[setting["Name"]].mean()-2*var) & (song_df[setting["Name"]] <= level*song_df[setting["Name"]].mean()+2*var)]
+    num_false = settings["On"].value_counts().loc[False]
+    if num_false == 5:
+      song_df = song_df.head(50)
+    else:
+      for index, setting in settings.iterrows():
+          if setting["On"]:
+                  print(int(setting["Level"]))
+                  level = int(setting["Level"])/50 
+                  var = song_df[setting["Name"]].var()
+                  song_df = song_df[(song_df[setting["Name"]] >= level*song_df[setting["Name"]].mean()-2*var) & (song_df[setting["Name"]] <= level*song_df[setting["Name"]].mean()+2*var)]
+      
     return song_df
 
 def gather_songs(sp, generes_list, settings_df, goal):
     final_df = find_and_filter(settings_df,generes_list,sp)
+    print("goal: ")
+    print(goal)
+    print("final_df")
+    print(len(final_df))
+    print(final_df)
     while (len(final_df) < goal):
         getter = find_and_filter(settings_df,generes_list,sp)
         final_df = pd.concat([final_df, getter], ignore_index = True)

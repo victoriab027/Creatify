@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.middleware.csrf import get_token
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from spotipy import oauth2, Spotify
@@ -7,6 +8,7 @@ import json
 import pandas as pd
 import requests
 from . import view_helper_functs
+
 # def vic_view(request): #old, no longer used
 #     sliders = [
 #   {
@@ -103,19 +105,32 @@ def baserender(request): #add in top features function
 # results page view
 def result_view(request):
     if request.method == 'POST':
-      genres = request.POST.getlist('genres')
-      slider_values = request.POST.get('slider_values')
-      genres = json.loads(genres[0])
+      body_unicode = request.body.decode('utf-8')
+      body = json.loads(body_unicode)
+      genres = body['genres']
+      slider_values = body['slider_values']
+      goal = body['goal']
+      goal = int(goal)
+      print('genres',genres)
+      print('slider_values',slider_values)
+      print('goal',goal)
       genres = [word.capitalize() for word in genres]
-      slider_values = json.loads(slider_values)
-      slider_values = view_helper_functs.convert_slider_vals(slider_values)
       request.session['selected_genres'] = genres
+      access_token = request.session.get('token').get('access_token')
+      playlist_titles, playlist_id = view_helper_functs.generate_playlist(access_token,genres,slider_values,goal )
+      request.session['playlist_titles'] = playlist_titles
+      request.session['playlist_id'] = playlist_id
+      # below are the names for the slider values not the names themselves
+      slider_values = view_helper_functs.convert_slider_vals(slider_values)
       request.session['slider_values'] = slider_values
-      return render(request, 'creatify_app/results.html')
+
+      return render(request, 'creatify_app/results.html', )
     else:
       selected_genres = request.session.get('selected_genres')
       slider_values = request.session.get('slider_values')
-      context = {'selected_genres': selected_genres, 'slider_values': slider_values, 'showbanner': True}
+      playlist_titles = request.session.get('playlist_titles')
+      playlist_id = request.session.get('playlist_id')
+      context = {'selected_genres': selected_genres, 'slider_values': slider_values, 'playlist_titles': playlist_titles, 'playlist_id':playlist_id, 'showbanner': True}
       print(context)
       return render(request, 'creatify_app/results.html', context)
 # get spotify authorization

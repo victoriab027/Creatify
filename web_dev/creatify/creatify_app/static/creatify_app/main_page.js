@@ -67,7 +67,7 @@ newButton.addEventListener('click', () => {
     }
   });
   hideButtons = !hideButtons;
-  newButton.firstElementChild.textContent = hideButtons ? 'Collapse unused genres' : 'Expand all genres';
+  newButton.firstElementChild.textContent = hideButtons ? 'Collapse Unused Genres' : 'Expand All Genres';
   newButton.lastElementChild.classList.toggle('rotated');
   if (hideButtons) {
     genre_table.style.display = 'block';
@@ -117,20 +117,6 @@ document.querySelectorAll('.slider').forEach(function(sliderInput) {
     }
   });
 });
-//show description
-const sliderHeaders = document.querySelectorAll(".slider");
-sliderHeaders.forEach(header => {
-  header.addEventListener("click", () => {
-    // Get the slider description div associated with this header
-    const descriptionDiv = header.nextElementSibling.nextElementSibling;
-    // Toggle the display of the description div
-    if (descriptionDiv.style.display === "none") {
-      descriptionDiv.style.display = "block";
-    } else {
-      descriptionDiv.style.display = "none";
-    }
-  });
-});
 // send data to view
 function send_selections() {
   const genre_buttons = document.querySelectorAll('.btn.active');
@@ -141,40 +127,50 @@ function send_selections() {
   if (genres.length < 3) {
     alert('Please select at least three genres.');
     return;
-  }const slider_values = [];
+  }
+  const slider_values = [];
   $('.slider-wrapper').each(function() {
     let slider_name = $(this).attr('id');
     slider_name = slider_name.substring(7);
     if (!$(this).hasClass('greyed-out')) {
       const slider_value = parseInt($(this).find('input.slider').val());
       slider_values.push({
-        'name': slider_name,
+        'Name': slider_name,
         'On': true,
         'Level': slider_value 
       });
     } else {
       slider_values.push({
-        'name': slider_name,
+        'Name': slider_name,
         'On': false,
         'Level': 0
       });
     }
   });
   const csrftoken = $("[name=csrfmiddlewaretoken]").val();
-  $.ajax({
-    type: "POST",
+  const number_of_songs = $("#goal").val();
+  console.log(genres);
+  const request = new Request('/results/', {
+    method: 'POST',
     headers: {'X-CSRFToken': csrftoken},
-    url: "/results/",
-    data: {
-      'genres': JSON.stringify(genres),
-      'slider_values': JSON.stringify(slider_values),
-      'csrfmiddlewaretoken': csrftoken
-    },
-    success: function() {
+    mode: 'same-origin',
+    body: JSON.stringify({
+      'genres': genres,
+      'slider_values': slider_values,
+      'goal': number_of_songs
+    })    
+  });
+  fetch(request).then(function(response) {
+    if (response.ok) {
       window.location.href = '/results/'; // Replace with the URL of the new page
+    } else {
+      throw new Error('Network response was not ok.');
     }
+  }).catch(function(error) {
+    console.log('There was a problem with the fetch operation:', error.message);
   });
 }
+
 //add send_select to button
 const $generate_button = $('#iloveowen');
 $generate_button.click(send_selections);
