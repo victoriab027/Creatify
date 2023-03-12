@@ -31,9 +31,9 @@
       <h3>Just a reminder... You picked the following feature guides:
         <ul>
          {% for att in slider_values %} 
-         <li> {% if not att.Level == 'skip' %} 
-          {{ att.Level }} 
-        {% endif %} </li>
+         {% if not att.Level == 'skip' %} 
+         <li>  {{ att.Level }} </li>
+        {% endif %} 
       {% endfor %}
     </ul>
     </h3>
