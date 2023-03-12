@@ -96,7 +96,6 @@ def generate_playlist(token,generes_list,settings, goal):
     print('begin of generate playlist')
     settings_df = pd.DataFrame(settings)
     songs = gather_songs(sp,generes_list,settings_df, goal)
-    print(songs.head())
     print('gathered songs')
 
     # Shuffle the dataframe 
@@ -119,10 +118,11 @@ def generate_playlist(token,generes_list,settings, goal):
             ]
         ) 
     reccomendation = output['choices'][0]['message']['content']
-    print('reccc',reccomendation)
+    #print('reccc',reccomendation)
     bullet_points = reccomendation.split('\n\n')[0].split('\n')[0:]
     playlist_titles = [point[2:] for point in bullet_points]
     playlist_titles = playlist_titles[1:]
+    print(playlist_titles)
     best_title = playlist_titles[0]
 
     username = sp.current_user()['id']
@@ -136,7 +136,6 @@ def generate_playlist(token,generes_list,settings, goal):
     tracks = songs["track_id"]
 
     sp.user_playlist_add_tracks(username, playlist_id=playlist_id, tracks=tracks)
-    print('right before return')
     return playlist_titles, playlist_id
 
 
@@ -158,12 +157,11 @@ def find_and_filter(settings, genres_list, sp):
             track_ids.append(track['id'])
     # Shuffle the list of track IDs
     random.shuffle(track_ids)
-    max_num = len(genres_list)*10-5
 
     # Generate recommendations based on the shuffled track IDs
     tracks = []
     i = 0
-    while i < max_num:
+    while i < len(track_ids):
       result = sp.recommendations(seed_genre = genres_list, seed_tracks=track_ids[i:i+5], limit=50)['tracks']
       for track in result:
         tracks.append(track)
@@ -171,7 +169,6 @@ def find_and_filter(settings, genres_list, sp):
     print("got reccomendations")
     song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
     song_df = pd.DataFrame(columns = song_features_list)
-    print("tracks")
     for track in tracks:
         # Create empty dict
         playlist_features = {}
@@ -195,16 +192,17 @@ def find_and_filter(settings, genres_list, sp):
     else:
       for index, setting in settings.iterrows():
           if setting["On"]:
-                  print(int(setting["Level"]))
                   level = int(setting["Level"])/50 
                   var = song_df[setting["Name"]].var()
-                  song_df = song_df[(song_df[setting["Name"]] >= level*song_df[setting["Name"]].mean()-2*var) & (song_df[setting["Name"]] <= level*song_df[setting["Name"]].mean()+2*var)]
-      
+                  song_df = song_df[(song_df[setting["Name"]] >= level*song_df[setting["Name"]].mean()-10*var) & (song_df[setting["Name"]] <= level*song_df[setting["Name"]].mean()+10*var)]
+    print("found "+str(len(song_df)))
     return song_df
 
 def gather_songs(sp, generes_list, settings_df, goal):
     final_df = find_and_filter(settings_df,generes_list,sp)
     while (len(final_df) < goal):
+        print("Still under. At length : ")
+        print(len(final_df))
         getter = find_and_filter(settings_df,generes_list,sp)
         final_df = pd.concat([final_df, getter], ignore_index = True)
     return final_df
