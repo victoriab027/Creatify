@@ -11,6 +11,7 @@ import re
 import os
 import openai
 from . import credentials
+import random
 
 ''' 
 
@@ -33,35 +34,35 @@ def convert_slider_vals(slider_list):
       slider["Level"] = "skip"
       continue
     
-    if 'Danceability' in slider['name']:
+    if 'danceability' in slider['name']:
       if slider["Level"] <25:
         slider["Level"] = "Low"+ f" {slider['name']}"
       elif slider["Level"] <75:
         slider["Level"] = "Medium"+ f" {slider['name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "High"+ f" {slider['name']}"
-    elif 'Energy' in slider['name']:
+    elif 'energy' in slider['name']:
       if slider["Level"] <25:
         slider["Level"] = "Calm"+ f" {slider['name']}"
       elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "Energetic"
-    elif 'Tempo' in slider['name']:
+    elif 'tempo' in slider['name']:
       if slider["Level"] <25:
         slider["Level"] = "Slower"+ f" {slider['name']}"
       elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "Faster"+ f" {slider['name']}"
-    elif 'Instrumentalness' in slider['name']:
+    elif 'instrumentalness' in slider['name']:
       if slider["Level"] <25:
         slider["Level"] = "Vocal"
       elif slider["Level"] <75:
         slider["Level"] = "Average"+ f" {slider['name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "Instrumental"
-    elif 'Valence' in slider['name']:
+    elif 'valence' in slider['name']:
       if slider["Level"] <25: #Meloncholic
         slider["Level"] = "Meloncholic"
       elif slider["Level"] <75:
@@ -91,42 +92,22 @@ def get_top_features(token): # fix so it can take a token instead
   return songs # this returns the above values in min then max order
 
 def generate_playlist(token,generes_list,settings, goal):
-    '''
-    This is the main function that will generate the playlist for the user. It contains queries to the Spotify API as well
-    as the OpenAI GPT 3.5 AI which means it can take a second to run! It is ended by creating the playlist and using the 
-    first name suggestion onto the users' spotify account. 
-
-    Returns: the other suggested playlist titles as well as the id of the new playlist created
-
-    Example call:
-
-
-    settings = [{"Name": "danceability", "On": True, "Level": 1},
-            {"Name": "energy", "On": True,"Level": 1},
-            {"Name": "valence", "On": True,"Level": 0},
-            {"Name": "loudness","On": False, "Level": 1},
-            {"Name": "instrumentalness","On": False, "Level": -1},
-            {"Name": "liveness", "On": True,"Level": 1}]
-
-    settings_df = pd.DataFrame(settings)
-
-    goal = 20
-    generes_list = ["indie-pop","dancehall"]
-    sp = get_logged_in()
-    titles, i = generate_playlist(sp,generes_list,settings_df, goal)
-
-    
-    '''
     sp = spotipy.Spotify(auth=token)
     print('begin of generate playlist')
     settings_df = pd.DataFrame(settings)
     songs = gather_songs(sp,generes_list,settings_df, goal)
+    print(songs.head())
     print('gathered songs')
+
+    # Shuffle the dataframe 
+    songs = songs.iloc[np.random.permutation(len(songs))].reset_index(drop=True)
     input = "The playlist has the following songs:"
-    for i in range(len(songs)) and i < 20:
+    i = 0
+    while i in range(len(songs)) and i < 20:
         song_name = songs['track_name'][i]
         song_artist = songs['artist'][i] # only the first artist
         input = input + "\n- " +song_name + " by " + song_artist
+        i += 1
     openai.api_key = credentials.api_key
     output = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -139,8 +120,9 @@ def generate_playlist(token,generes_list,settings, goal):
         ) 
     reccomendation = output['choices'][0]['message']['content']
     print('reccc',reccomendation)
-    bullet_points = reccomendation.split('\n\n')[1].split('\n')[0:]
+    bullet_points = reccomendation.split('\n\n')[0].split('\n')[0:]
     playlist_titles = [point[2:] for point in bullet_points]
+    playlist_titles = playlist_titles[1:]
     best_title = playlist_titles[0]
 
     username = sp.current_user()['id']
@@ -168,24 +150,30 @@ def generate_playlist(token,generes_list,settings, goal):
 ############################
 def find_and_filter(settings, genres_list, sp):
     #FINDING
-    search = ''
-    for i in range(len(genres_list)):
-      search += 'genre:'
-      search +=  f'"{genres_list[i]}"'
-      if genres_list[i] != genres_list[-1]:
-        search += ' OR '
-    
-    print(search)
-      
-    results = sp.search(q = search, type = 'track', limit=50, offset = 0)
-    song_features_list = ["artist","album","track_name",  "track_id","Danceability","Energy","Key","Loudness","mode", "Speechiness","Instrumentalness","Liveness","Valence","Tempo", "duration_ms","time_signature"]
+    # Generate a list of 10 track IDs for each genre
+    track_ids = []
+    for genre in genres_list:
+        tracks = sp.search(q='genre:' + genre, type='track', limit=10)['tracks']['items']
+        for track in tracks:
+            track_ids.append(track['id'])
+    # Shuffle the list of track IDs
+    random.shuffle(track_ids)
+    max_num = len(genres_list)*10-5
+
+    # Generate recommendations based on the shuffled track IDs
+    tracks = []
+    i = 0
+    while i < max_num:
+      result = sp.recommendations(seed_genre = genres_list, seed_tracks=track_ids[i:i+5], limit=50)['tracks']
+      for track in result:
+        tracks.append(track)
+      i += 5
+    print("got reccomendations")
+    song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
     song_df = pd.DataFrame(columns = song_features_list)
-    tracks = results["tracks"]
     print("tracks")
-    print(tracks)
     for track in tracks:
         # Create empty dict
-        print(track)
         playlist_features = {}
         playlist_features["artist"] = track["album"]["artists"][0]["name"]
         playlist_features["album"] = track["album"]["name"]
@@ -200,8 +188,6 @@ def find_and_filter(settings, genres_list, sp):
         # Concat the dfs
         track_df = pd.DataFrame(playlist_features, index = [0])
         song_df = pd.concat([song_df, track_df], ignore_index = True)
-        print("track_df")
-        print(track_df)
     #FILTERING
     num_false = settings["On"].value_counts().loc[False]
     if num_false == 5:
@@ -218,11 +204,6 @@ def find_and_filter(settings, genres_list, sp):
 
 def gather_songs(sp, generes_list, settings_df, goal):
     final_df = find_and_filter(settings_df,generes_list,sp)
-    print("goal: ")
-    print(goal)
-    print("final_df")
-    print(len(final_df))
-    print(final_df)
     while (len(final_df) < goal):
         getter = find_and_filter(settings_df,generes_list,sp)
         final_df = pd.concat([final_df, getter], ignore_index = True)

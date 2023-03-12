@@ -55,7 +55,7 @@ def baserender(request): #add in top features function
   #add in top features function
   sliders = [
   {
-    "name": "Danceability",
+    "name": "danceability",
     "desc": "Danceability measures how suitable for dancing and is based on musical elements such as tempo, rhythm stability, beat and regularity.",
     "track_low":songs_dict['danceability'][0][14:],
     "track_high":songs_dict['danceability'][1][14:],
@@ -64,7 +64,7 @@ def baserender(request): #add in top features function
     "high":"High"
   },
   {
-    "name": "Energy",
+    "name": "energy",
     "desc": "Energy measures the intensity and activity based on loudness, timbre, and other factors.",
     "track_low":songs_dict['energy'][0][14:],
     "track_high":songs_dict['energy'][1][14:],
@@ -73,7 +73,7 @@ def baserender(request): #add in top features function
     "high":"Energetic"
   },
   {
-    "name": "Valence",
+    "name": "valence",
     "desc": "Valence is the positivity of the song i.e. happier songs have higher valence",
     "track_low":songs_dict['valence'][0][14:],
     "track_high":songs_dict['valence'][1][14:],
@@ -82,7 +82,7 @@ def baserender(request): #add in top features function
     "high":"Cheery"
   },
   {
-    "name": "Instrumentalness",
+    "name": "instrumentalness",
     "desc": "Instrumentalness measures how much of the song is predominated with vocals or instruments",
     "track_low":songs_dict['instrumentalness'][0][14:],
     "track_high":songs_dict['instrumentalness'][1][14:],
@@ -91,7 +91,7 @@ def baserender(request): #add in top features function
     "high":"Instrumental"
   },
   {
-    "name": "Tempo",
+    "name": "tempo",
     "desc": "The speed of the track in beats per minute",
     "track_low":songs_dict['tempo'][0][14:],
     "track_high":songs_dict['tempo'][1][14:],
