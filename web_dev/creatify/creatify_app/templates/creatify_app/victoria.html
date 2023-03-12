@@ -70,14 +70,14 @@ Your highest and lowest recent song of each feature are linked below</h5>
 
 
 {% for slider in sliders %}
-    <h3 class="slider">{{slider.name}}</h3>
+    <h3 class="slider">{{slider.Name}}</h3>
 
      <!-- New Toggle Button -->
      <div class = "center">
-        <div class="slider-description" id="desc-{{slider.name}}">{{slider.desc}}
+        <div class="slider-description" id="desc-{{slider.Name}}">{{slider.desc}}
         </div>
         <label class="switch">
-          <input type="checkbox" checked id="{{slider.name}}">
+          <input type="checkbox" checked id="{{slider.Name}}">
           <span class="toggle-slider"></span>
           <span class="toggle-text on">ENABLED</span>
           <span class="toggle-text off">DISABLED</span>
@@ -94,14 +94,14 @@ Your highest and lowest recent song of each feature are linked below</h5>
         <br><br><br><br><br><br><br><br>
 
         {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
-        <div class="slider-wrapper" id="slider-{{slider.name}}" >
+        <div class="slider-wrapper" id="slider-{{slider.Name}}" >
             <div class="labels">
-              <span class="low" id="low-{{slider.name}}">{{slider.low}}</span>
-              <span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
-              <span class="high" id="high-{{slider.name}}">{{slider.high}}</span>
+              <span class="low" id="low-{{slider.Name}}">{{slider.low}}</span>
+              <span class="medium" id="medium-{{slider.Name}}">{{slider.medium}}</span>
+              <span class="high" id="high-{{slider.Name}}">{{slider.high}}</span>
             </div>
             <div class = "center">
-                <input type="range" min="0" max="100" value="50" class="slider" id="slider-input-{{slider.name}}"/>
+                <input type="range" min="0" max="100" value="50" class="slider" id="slider-input-{{slider.Name}}"/>
             </div>
                        
         </div>

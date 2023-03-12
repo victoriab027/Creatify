@@ -34,39 +34,39 @@ def convert_slider_vals(slider_list):
       slider["Level"] = "skip"
       continue
     
-    if 'danceability' in slider['name']:
+    if 'danceability' in slider['Name']:
       if slider["Level"] <25:
-        slider["Level"] = "Low"+ f" {slider['name']}"
+        slider["Level"] = "Low"+ f" {slider['Name']}"
       elif slider["Level"] <75:
-        slider["Level"] = "Medium"+ f" {slider['name']}"
+        slider["Level"] = "Medium"+ f" {slider['Name']}"
       elif slider['Level'] >= 75:
-        slider["Level"] = "High"+ f" {slider['name']}"
-    elif 'energy' in slider['name']:
+        slider["Level"] = "High"+ f" {slider['Name']}"
+    elif 'energy' in slider['Name']:
       if slider["Level"] <25:
-        slider["Level"] = "Calm"+ f" {slider['name']}"
+        slider["Level"] = "Calm"+ f" {slider['Name']}"
       elif slider["Level"] <75:
-        slider["Level"] = "Average"+ f" {slider['name']}"
+        slider["Level"] = "Average"+ f" {slider['Name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "Energetic"
-    elif 'tempo' in slider['name']:
+    elif 'tempo' in slider['Name']:
       if slider["Level"] <25:
-        slider["Level"] = "Slower"+ f" {slider['name']}"
+        slider["Level"] = "Slower"+ f" {slider['Name']}"
       elif slider["Level"] <75:
-        slider["Level"] = "Average"+ f" {slider['name']}"
+        slider["Level"] = "Average"+ f" {slider['Name']}"
       elif slider['Level'] >= 75:
-        slider["Level"] = "Faster"+ f" {slider['name']}"
-    elif 'instrumentalness' in slider['name']:
+        slider["Level"] = "Faster"+ f" {slider['Name']}"
+    elif 'instrumentalness' in slider['Name']:
       if slider["Level"] <25:
         slider["Level"] = "Vocal"
       elif slider["Level"] <75:
-        slider["Level"] = "Average"+ f" {slider['name']}"
+        slider["Level"] = "Average"+ f" {slider['Name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "Instrumental"
-    elif 'valence' in slider['name']:
+    elif 'valence' in slider['Name']:
       if slider["Level"] <25: #Meloncholic
         slider["Level"] = "Meloncholic"
       elif slider["Level"] <75:
-        slider["Level"] = "Average"+ f" {slider['name']}"
+        slider["Level"] = "Average"+ f" {slider['Name']}"
       elif slider['Level'] >= 75:
         slider["Level"] = "Cheery"
   return slider_list
@@ -114,10 +114,12 @@ def generate_playlist(token,generes_list,settings, goal):
                 {"role": "system", "content": "You are a playlist reccomendation software. The user will ask for a playlist title given a list of songs in the playlist."},
                 {"role": "user", "content": input},
                 {"role": "assistant", "content": "A playlist title should not be longer than 7 words and at minimum 2 words"},
-                {"role": "assistant", "content": "Give more than 1 suggestion"}
+                {"role": "assistant", "content": "Give more than 3 suggestions and less than 8"},
+                {"role": "assistant", "content": "Structure your format in the output. ' here are three suggestions for playlist titles based on the songs you provided:\n1.Reccomendation\n2.Reccomendation\n3.Reccomendation\n4.Reccomendation\n5.Reccomendation, and so on'"}
             ]
         ) 
     reccomendation = output['choices'][0]['message']['content']
+    print(reccomendation)
     #print('reccc',reccomendation)
     bullet_points = reccomendation.split('\n\n')[0].split('\n')[0:]
     playlist_titles = [point[2:] for point in bullet_points]
@@ -126,7 +128,7 @@ def generate_playlist(token,generes_list,settings, goal):
     best_title = playlist_titles[0]
 
     username = sp.current_user()['id']
-    result = sp.user_playlist_create(username, name=best_title)
+    result = sp.user_playlist_create(username, name=best_title, description="A personalized discovery playlist created with Creatify")
     playlist_id = result['id']
 
     logger = logging.getLogger('examples.add_tracks_to_playlist')
@@ -194,7 +196,10 @@ def find_and_filter(settings, genres_list, sp):
           if setting["On"]:
                   level = int(setting["Level"])/50 
                   var = song_df[setting["Name"]].var()
-                  song_df = song_df[(song_df[setting["Name"]] >= level*song_df[setting["Name"]].mean()-10*var) & (song_df[setting["Name"]] <= level*song_df[setting["Name"]].mean()+10*var)]
+                  mean = 0.5
+                  if setting["Name"] == "tempo":
+                      mean = 80 # kinda just guessing on this one
+                  song_df = song_df[(song_df[setting["Name"]] >= level*mean-3*var) & (song_df[setting["Name"]] <= level*mean+3*var)]
     print("found "+str(len(song_df)))
     return song_df
 
