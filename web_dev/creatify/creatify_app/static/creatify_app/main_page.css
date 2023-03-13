@@ -957,3 +957,6 @@ input:not(:placeholder-shown) ~ .reset {
     }
   }
     
+.langage_toggle{
+  margin-left: 18px;
+}
