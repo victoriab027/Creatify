@@ -18,20 +18,29 @@ window.addEventListener('load', function() {
     button.classList.remove('button');
     button.classList.add('button_active');
 
-    changePlaylistName(button.id);
+    changePlaylistName(button.id,button.textContent);
   }
-  function changePlaylistName(title) {
-    $.ajax({
-      url: "{% url 'change_playlist_name' %}",
-      method: "POST",
-      data: { title: title },
-      success: function(response) {
-        // Handle success response
-      },
-      error: function(xhr) {
-        // Handle error response
-      }
-    });
+  function changePlaylistName(id, title) {
+  const csrftoken = $("[name=csrfmiddlewaretoken]").val();
+  const request = new Request('/results/', {
+    method: 'POST',
+    headers: {'X-CSRFToken': csrftoken},
+    mode: 'same-origin',
+    body: JSON.stringify({
+      'nameChange': true,
+      'newName' : title,
+      'playlistID': id,
+    })    
+  });
+  fetch(request).then(function(response) {
+    if (response.ok) {
+      window.location.href = '/results/'; // Replace with the URL of the new page
+    } else {
+      throw new Error('Network response was not ok.');
+    }
+  }).catch(function(error) {
+    console.log('There was a problem with the fetch operation:', error.message);
+  });
   }
 
   

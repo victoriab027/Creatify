@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+{% csrf_token %}
 <div id="loading-overlay">
   <div class="loading-text">Loading Creatify...</div>
   <br>
@@ -44,7 +45,7 @@
           {% if forloop.first %}
             <button onclick="toggleButtonClass(this)" class="button_active" id = "{{ title }}">{{ title }}</button><br>
           {% else %}
-            <button onclick="toggleButtonClass(this)" id = "{{ title }}">{{ title }}</button><br>
+            <button onclick="toggleButtonClass(this)" id = "{{playlist_id}}">{{ title }}</button><br>
           {% endif %}
         {% endfor %}
     </div>

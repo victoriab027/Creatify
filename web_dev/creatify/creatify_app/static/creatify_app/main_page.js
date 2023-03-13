@@ -149,12 +149,12 @@ function send_selections() {
   });
   const csrftoken = $("[name=csrfmiddlewaretoken]").val();
   const number_of_songs = $("#goal").val();
-  console.log(genres);
   const request = new Request('/results/', {
     method: 'POST',
     headers: {'X-CSRFToken': csrftoken},
     mode: 'same-origin',
     body: JSON.stringify({
+      'nameChange':false,
       'genres': genres,
       'slider_values': slider_values,
       'goal': number_of_songs

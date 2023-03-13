@@ -108,24 +108,30 @@ def result_view(request):
     if request.method == 'POST':
       body_unicode = request.body.decode('utf-8')
       body = json.loads(body_unicode)
-      genres = body['genres']
-      slider_values = body['slider_values']
-      goal = body['goal']
-      goal = int(goal)
-      print('genres',genres)
-      print('slider_values',slider_values)
-      print('goal',goal)
-      genres = [word.capitalize() for word in genres]
-      request.session['selected_genres'] = genres
-      access_token = request.session.get('token').get('access_token')
-      playlist_titles, playlist_id = view_helper_functs.generate_playlist(access_token,genres,slider_values,goal )
-      request.session['playlist_titles'] = playlist_titles
-      request.session['playlist_id'] = playlist_id
-      # below are the names for the slider values not the names themselves
-      slider_values = view_helper_functs.convert_slider_vals(slider_values)
-      request.session['slider_values'] = slider_values
+      if body['nameChange']:
+        print('new name',body['newName'])
+        access_token = request.session.get('token').get('access_token')
+        sp = Spotify(auth=access_token)
+        sp.playlist_change_details(playlist_id=body['playlistID'],name = body['newName'])
+      else:
+        genres = body['genres']
+        slider_values = body['slider_values']
+        goal = body['goal']
+        goal = int(goal)
+        print('genres',genres)
+        print('slider_values',slider_values)
+        print('goal',goal)
+        genres = [word.capitalize() for word in genres]
+        request.session['selected_genres'] = genres
+        access_token = request.session.get('token').get('access_token')
+        playlist_titles, playlist_id = view_helper_functs.generate_playlist(access_token,genres,slider_values,goal )
+        request.session['playlist_titles'] = playlist_titles
+        request.session['playlist_id'] = playlist_id
+        # below are the names for the slider values not the names themselves
+        slider_values = view_helper_functs.convert_slider_vals(slider_values)
+        request.session['slider_values'] = slider_values
 
-      return render(request, 'creatify_app/results.html', )
+        return render(request, 'creatify_app/results.html' )
     else:
       selected_genres = request.session.get('selected_genres')
       slider_values = request.session.get('slider_values')
