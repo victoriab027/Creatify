@@ -31,9 +31,9 @@
       <h3>Just a reminder... You picked the following feature guides:
         <ul>
          {% for att in slider_values %} 
-         <li> {% if not att.Level == 'skip' %} 
-          {{ att.Level }} 
-        {% endif %} </li>
+         {% if not att.Level == 'skip' %} 
+         <li>  {{ att.Level }} 
+        {% endif %} 
       {% endfor %}
     </ul>
     </h3>
@@ -41,7 +41,11 @@
         <h3>Click on one of them to change it</h3>
         <!-- TODO: make this into a for loop like above-->
         {% for title in playlist_titles%} 
-          <button onclick = "toggleButtonClass(this)" class = "button_active">{{title}}</button><br>
+          {% if forloop.first %}
+            <button onclick="toggleButtonClass(this)" class="button_active" id = "{{ title }}">{{ title }}</button><br>
+          {% else %}
+            <button onclick="toggleButtonClass(this)" id = "{{ title }}">{{ title }}</button><br>
+          {% endif %}
         {% endfor %}
     </div>
     <div class="playlist">

@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.middleware.csrf import get_token
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from spotipy import oauth2, Spotify
 from . import credentials
 import json
@@ -55,7 +56,7 @@ def baserender(request): #add in top features function
   #add in top features function
   sliders = [
   {
-    "name": "Danceability",
+    "Name": "danceability",
     "desc": "Danceability measures how suitable for dancing and is based on musical elements such as tempo, rhythm stability, beat and regularity.",
     "track_low":songs_dict['danceability'][0][14:],
     "track_high":songs_dict['danceability'][1][14:],
@@ -64,7 +65,7 @@ def baserender(request): #add in top features function
     "high":"High"
   },
   {
-    "name": "Energy",
+    "Name": "energy",
     "desc": "Energy measures the intensity and activity based on loudness, timbre, and other factors.",
     "track_low":songs_dict['energy'][0][14:],
     "track_high":songs_dict['energy'][1][14:],
@@ -73,7 +74,7 @@ def baserender(request): #add in top features function
     "high":"Energetic"
   },
   {
-    "name": "Valence",
+    "Name": "valence",
     "desc": "Valence is the positivity of the song i.e. happier songs have higher valence",
     "track_low":songs_dict['valence'][0][14:],
     "track_high":songs_dict['valence'][1][14:],
@@ -82,7 +83,7 @@ def baserender(request): #add in top features function
     "high":"Cheery"
   },
   {
-    "name": "Instrumentalness",
+    "Name": "instrumentalness",
     "desc": "Instrumentalness measures how much of the song is predominated with vocals or instruments",
     "track_low":songs_dict['instrumentalness'][0][14:],
     "track_high":songs_dict['instrumentalness'][1][14:],
@@ -91,7 +92,7 @@ def baserender(request): #add in top features function
     "high":"Instrumental"
   },
   {
-    "name": "Tempo",
+    "Name": "tempo",
     "desc": "The speed of the track in beats per minute",
     "track_low":songs_dict['tempo'][0][14:],
     "track_high":songs_dict['tempo'][1][14:],
@@ -184,3 +185,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login_view')
+
+def change_playlist_name(request):
+  '''
+  input: sp, playlist_id, new_name 
+
+  (new_name should be the id of the button)
+
+  sp.playlist_change_details(playlist_id,name = new_name)
+  
+  '''
+  if request.method == 'POST':
+      title = request.POST.get('title')
+      # Call the change_playlist_name() function with the selected title
+      change_playlist_name(title)
+      # Return a success JSON response
+      return JsonResponse({'status': 'success'})
+  # Return an error JSON response if the request method is not POST
+  return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
