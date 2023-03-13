@@ -182,9 +182,17 @@ def find_and_filter(settings, genres_list, sp):
       playlist_features["track_id"] = track["id"]
       
       # Get audio features
-      audio_features = sp.audio_features(playlist_features["track_id"])[0]
+      try:
+        audio_features = sp.audio_features(playlist_features["track_id"])[0]
+      except:
+        print(audio_features)
+        continue
       for feature in song_features_list[4:]:
-          playlist_features[feature] = audio_features[feature]
+          try:
+            playlist_features[feature] = audio_features[feature]
+          except:
+            print(feature, track, audio_features)
+            continue
       
       # Concat the dfs
       track_df = pd.DataFrame(playlist_features, index = [0])

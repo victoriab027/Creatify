@@ -124,12 +124,8 @@ function send_selections() {
   genre_buttons.forEach(button => {
     genres.push(button.textContent);
   });
-  if (genres.length < 2) {
-    alert('Please select at least two genres.');
-    return;
-  }
-  if (genres.length > 5) {
-    alert('Please select no more than five genres.');
+  if (genres.length < 3) {
+    alert('Please select at least three genres.');
     return;
   }
   const slider_values = [];
@@ -152,27 +148,18 @@ function send_selections() {
     }
   });
   const csrftoken = $("[name=csrfmiddlewaretoken]").val();
-  const languageEnabled = $('#langeage').is(':checked');
-  if (not(number_of_songs < 50 && number_of_songs > 5)) {
-    alert('Please choose a valid number of minimum songs.');
-    return;
-  }
   const number_of_songs = $("#goal").val();
-
-  console.log(genres);
   const request = new Request('/results/', {
     method: 'POST',
     headers: {'X-CSRFToken': csrftoken},
     mode: 'same-origin',
     body: JSON.stringify({
-      'nameChange': false,
+      'nameChange':false,
       'genres': genres,
       'slider_values': slider_values,
-      'goal': number_of_songs,
-      'langaugeEnabled': languageEnabled
+      'goal': number_of_songs
     })    
   });
-
   fetch(request).then(function(response) {
     if (response.ok) {
       window.location.href = '/results/'; // Replace with the URL of the new page
