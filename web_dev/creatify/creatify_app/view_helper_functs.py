@@ -154,7 +154,7 @@ def find_and_filter(settings, genres_list, sp):
     # Generate a list of 10 track IDs for each genre
     track_ids = []
     for genre in genres_list:
-        tracks = sp.search(q='genre:' + genre, type='track', limit=10)['tracks']['items']
+        tracks = sp.search(q='genre:' + genre, type='track', limit=30)['tracks']['items']
         for track in tracks:
             track_ids.append(track['id'])
     # Shuffle the list of track IDs
@@ -164,29 +164,32 @@ def find_and_filter(settings, genres_list, sp):
     tracks = []
     i = 0
     while i < len(track_ids):
-      result = sp.recommendations(seed_genre = genres_list, seed_tracks=track_ids[i:i+5], limit=50)['tracks']
+      result = sp.recommendations(seed_genre = genres_list, seed_tracks=track_ids[i:i+5], limit=100)['tracks']
       for track in result:
         tracks.append(track)
       i += 5
     print("got reccomendations")
+    print(len(tracks))
     song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
     song_df = pd.DataFrame(columns = song_features_list)
+    #Get list of old songs to and remove any duplicates
     for track in tracks:
-        # Create empty dict
-        playlist_features = {}
-        playlist_features["artist"] = track["album"]["artists"][0]["name"]
-        playlist_features["album"] = track["album"]["name"]
-        playlist_features["track_name"] = track["name"]
-        playlist_features["track_id"] = track["id"]
-        
-        # Get audio features
-        audio_features = sp.audio_features(playlist_features["track_id"])[0]
-        for feature in song_features_list[4:]:
-            playlist_features[feature] = audio_features[feature]
-        
-        # Concat the dfs
-        track_df = pd.DataFrame(playlist_features, index = [0])
-        song_df = pd.concat([song_df, track_df], ignore_index = True)
+      # Create empty dict
+      playlist_features = {}
+      playlist_features["artist"] = track["album"]["artists"][0]["name"]
+      playlist_features["album"] = track["album"]["name"]
+      playlist_features["track_name"] = track["name"]
+      playlist_features["track_id"] = track["id"]
+      
+      # Get audio features
+      audio_features = sp.audio_features(playlist_features["track_id"])[0]
+      for feature in song_features_list[4:]:
+          playlist_features[feature] = audio_features[feature]
+      
+      # Concat the dfs
+      track_df = pd.DataFrame(playlist_features, index = [0])
+      song_df = pd.concat([song_df, track_df], ignore_index = True)
+
     #FILTERING
     num_false = settings["On"].value_counts().loc[False]
     if num_false == 5:
@@ -194,20 +197,34 @@ def find_and_filter(settings, genres_list, sp):
     else:
       for index, setting in settings.iterrows():
           if setting["On"]:
-                  level = int(setting["Level"])/50 
+              level = int(setting["Level"])/50 
+              var = 0.1
+              mean_1 = 0.5
+              mean_2 = song_df[setting["Name"]].mean()
+              if setting["Name"] == "tempo":
+                  mean_1 = 90 # kinda just guessing on this one
                   var = song_df[setting["Name"]].var()
-                  mean = 0.5
-                  if setting["Name"] == "tempo":
-                      mean = 80 # kinda just guessing on this one
-                  song_df = song_df[(song_df[setting["Name"]] >= level*mean-3*var) & (song_df[setting["Name"]] <= level*mean+3*var)]
+                  song_df_1 = song_df[(song_df[setting["Name"]] >= level*mean_1-3*var) & (song_df[setting["Name"]] <= level*mean_1+3*var)]
+                  song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-3*var) & (song_df[setting["Name"]] <= level*mean_2+3*var)]
+              else:
+                song_df_1 = song_df[(song_df[setting["Name"]] >= level*mean_1-1.5*var) & (song_df[setting["Name"]] <= level*mean_1+1.5*var)]
+                song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-1.5*var) & (song_df[setting["Name"]] <= level*mean_2+1.5*var)]
+              song_df =  pd.concat([song_df_1, song_df_2], ignore_index = True)
+      song_df.drop_duplicates(keep='first', inplace =  True)
+      print(len(song_df))
     print("found "+str(len(song_df)))
     return song_df
 
 def gather_songs(sp, generes_list, settings_df, goal):
+    song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
+    song_df = pd.DataFrame(columns = song_features_list)
     final_df = find_and_filter(settings_df,generes_list,sp)
     while (len(final_df) < goal):
         print("Still under. At length : ")
         print(len(final_df))
         getter = find_and_filter(settings_df,generes_list,sp)
         final_df = pd.concat([final_df, getter], ignore_index = True)
+        final_df.drop_duplicates(keep='first', inplace =  True)
+    if len(final_df) > 100:
+      final_df = final_df[:100]
     return final_df
