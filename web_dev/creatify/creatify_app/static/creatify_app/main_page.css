@@ -428,7 +428,7 @@ input[type="range"] {
   width: 20px; /* 1 */
   height: 40px;
   background: #fff;
-  box-shadow: -800px 0 0 800px #204931; /* 2 */
+  box-shadow: -10000px 0 0 10000px #204931; /* 2 */
   border: 2px solid #999; /* 1 */
   border-radius: 3px; 
 }
@@ -839,14 +839,16 @@ input:not(:placeholder-shown) ~ .reset {
   padding: 0.5em 0.75em;
   border-radius: 0.2em;
   border: 1px solid var(--c-border, currentColor);
-  color: var(--c-text);
+  color: rgb(50, 50, 80);
   font-size: 1rem;
+
   letter-spacing: 0.1ch;
   width: 100%;
 }
 
 .input-field:not(:placeholder-shown) + .input-label {
   transform: translateY(-220%);
+  color: rgb(50, 50, 80);
   opacity: 1;
 }
 

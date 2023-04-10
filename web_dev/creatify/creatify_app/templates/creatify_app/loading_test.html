@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <style>
+            .puzzle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.puzzle {
+  display: grid;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 10px;
+  margin-bottom: 20px;
+}
+
+.puzzle-piece {
+  background-image: url('path/to/puzzle-image.jpg');
+  background-size: 300px 300px;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.puzzle-piece.empty {
+  background-image: none;
+}
+
+            .progress-bar-container {
+                width: 100%;
+                height: 5px;
+                background-color: #f2f2f2;
+                margin-top: 20px;
+                }
+
+                .progress-bar {
+                width: 0%;
+                height: 100%;
+                background-color: #4CAF50;
+                transition: width 0.5s ease-in-out;
+                }
+        </style>  
+    </head>
+<body>
+    <div class="puzzle-container">
+        <h2>Can you solve this puzzle?</h2>
+        <div class="puzzle">
+          <div class="puzzle-piece" data-row="1" data-col="1"></div>
+          <div class="puzzle-piece" data-row="1" data-col="2"></div>
+          <div class="puzzle-piece" data-row="1" data-col="3"></div>
+          <div class="puzzle-piece" data-row="2" data-col="1"></div>
+          <div class="puzzle-piece" data-row="2" data-col="2"></div>
+          <div class="puzzle-piece" data-row="2" data-col="3"></div>
+          <div class="puzzle-piece" data-row="3" data-col="1"></div>
+          <div class="puzzle-piece" data-row="3" data-col="2"></div>
+          <div class="puzzle-piece" data-row="3" data-col="3"></div>
+        </div>
+      </div>
+      
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+      
+      
+  <script>
+    var puzzleContainer = document.querySelector('.puzzle');
+var progressBar = document.querySelector('.progress-bar');
+var emptyPiece = { row: 3, col: 3 };
+var totalSize = document.documentElement.scrollHeight - window.innerHeight;
+var progress = 0;
+
+function shufflePuzzle() {
+  var pieces = Array.from(puzzleContainer.children);
+  pieces.forEach(function(piece) {
+    var row = Math.floor(Math.random() * 3) + 1;
+    var col = Math.floor(Math.random() * 3) + 1;
+    piece.setAttribute('data-row', row);
+    piece.setAttribute('data-col', col);
+    piece.style.gridRow = row;
+    piece.style.gridColumn = col;
+    if (row === 3 && col === 3) {
+      piece.classList.add('empty');
+    } else {
+      piece.classList.remove('empty');
+    }
+  });
+}
+
+function updateProgressBar(progress) {
+  progressBar.style.width = progress + '%';
+}
+
+window.addEventListener('load', function() {
+  shufflePuzzle();
+  
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    progress = (scrollTop / totalSize) * 100;
+    updateProgressBar(progress);
+  });
+});
+
+puzzleContainer.addEventListener('click', function(event) {
+  var piece = event.target;
+  var row = parseInt(piece.getAttribute('data-row'));
+  var col = parseInt(piece.getAttribute('data-col'));
+  var emptyRow = emptyPiece.row;
+  var emptyCol = emptyPiece.col;
+  
+  if (row === emptyRow + 1 && col === emptyCol) {
+    piece.style.gridRow = emptyRow;
+    emptyPiece.row = row;
+    piece.setAttribute('data-row', emptyRow);
+    emptyPiece.col = col;
+    piece.setAttribute('data-col', col);
+  } else if (row === emptyRow - 1 && col === emptyCol) {
+    piece.style.gridRow = emptyRow;
+    emptyPiece.row = row;
+    piece.setAttribute('data-row', emptyRow);
+    emptyPiece.col = col;
+    piece.setAttribute('data-col', col);
+  } else if (row === emptyRow && col === emptyCol + 1) {
+    piece.style.gridColumn = emptyCol;
+    emptyPiece.row = row;
+    piece.setAttribute('data-row', row);
+    emptyPiece.col = col;
+    piece.setAttribute('data-col', emptyCol);
+  } else if (row === emptyRow && col === emptyCol - 1) {
+    piece.style.gridColumn = emptyCol;
+    emptyPiece.row = row;
+    piece.setAttribute('data-row', row);
+    emptyPiece.col = col;
+    piece.setAttribute('data-col', emptyCol);
+  }
+});
+
+shuffleButton.addEventListener('click', function() {
+  shufflePuzzle();
+  emptyPiece = { row: 3, col: 3 };
+});
+
+
+  var progressBar = document.querySelector('.progress-bar');
+
+function updateProgressBar(progress) {
+  progressBar.style.width = progress + '%';
+}
+
+window.addEventListener('load', function() {
+  var totalSize = document.documentElement.scrollHeight - window.innerHeight;
+  var progress = 0;
+  
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    progress = (scrollTop / totalSize) * 100;
+    updateProgressBar(progress);
+  });
+});
+
+  </script>
+  </body>
+  </html>

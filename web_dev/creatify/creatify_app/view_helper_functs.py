@@ -152,51 +152,54 @@ def generate_playlist(token,generes_list,settings, goal):
 def find_and_filter(settings, genres_list, sp):
     #FINDING
     # Generate a list of 10 track IDs for each genre
-    track_ids = []
-    for genre in genres_list:
-        tracks = sp.search(q='genre:' + genre, type='track', limit=30)['tracks']['items']
-        for track in tracks:
-            track_ids.append(track['id'])
+    track_ids = [track['id'] for genre in genres_list for track in sp.search(q='genre:' + genre, type='track', limit=10)['tracks']['items']]
+
     # Shuffle the list of track IDs
     random.shuffle(track_ids)
 
     # Generate recommendations based on the shuffled track IDs
-    tracks = []
-    i = 0
-    while i < len(track_ids):
-      result = sp.recommendations(seed_genre = genres_list, seed_tracks=track_ids[i:i+5], limit=100)['tracks']
-      for track in result:
-        tracks.append(track)
-      i += 5
+    tracks = [track for i in range(0, len(track_ids), 5) for track in sp.recommendations(seed_genre=genres_list, seed_tracks=track_ids[i:i+5], limit=100)['tracks']]
+    track_ids = []
+    for track in tracks:
+        track_ids.append(track['uri'])
     print("got reccomendations")
     print(len(tracks))
+
     song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
-    song_df = pd.DataFrame(columns = song_features_list)
-    #Get list of old songs to and remove any duplicates
-    for track in tracks:
-      # Create empty dict
-      playlist_features = {}
-      playlist_features["artist"] = track["album"]["artists"][0]["name"]
-      playlist_features["album"] = track["album"]["name"]
-      playlist_features["track_name"] = track["name"]
-      playlist_features["track_id"] = track["id"]
-      
-      # Get audio features
-      try:
-        audio_features = sp.audio_features(playlist_features["track_id"])[0]
-      except:
-        print(audio_features)
-        continue
-      for feature in song_features_list[4:]:
-          try:
-            playlist_features[feature] = audio_features[feature]
-          except:
-            print(feature, track, audio_features)
-            continue
-      
-      # Concat the dfs
-      track_df = pd.DataFrame(playlist_features, index = [0])
-      song_df = pd.concat([song_df, track_df], ignore_index = True)
+    song_df = pd.DataFrame(columns = song_features_list, index=range(len(track_ids)))
+
+    # Fill all cells with NaN
+    song_df[:] = float('nan')
+
+    # Create empty dict
+    playlist_features = {}
+    playlist_features["artist"] = []
+    playlist_features["album"] = []
+    playlist_features["track_name"] = []
+    playlist_features["track_id"] = []
+
+    for i in range(len(track_ids)):  
+        #song_df["artist"][i] = tracks[i]["album"]["artists"][0]["name"]
+        playlist_features["artist"].append(tracks[i]["album"]["artists"][0]["name"])
+        playlist_features["album"].append(tracks[i]["album"]["name"])
+        playlist_features["track_name"].append(tracks[i]["name"])
+        playlist_features["track_id"].append(tracks[i]["id"])
+
+    song_df["artist"] =  playlist_features["artist"]
+    song_df["album"] =  playlist_features["album"]
+    song_df["track_name"] =  playlist_features["track_name"]
+    song_df["track_id"] =  playlist_features["track_id"]
+
+    for i in range(0, len(track_ids), 100):  
+        audio_features = sp.audio_features(track_ids[i:i+100])# Batch size of 100 for API requests
+        for j in range(len(audio_features)):
+            # Update the dataframe with information from the dictionary for the specific track_id
+            track_id = audio_features[j]["id"]
+            dict_info = {}
+            for feature in song_features_list[4:]:
+                dict_info[feature] = audio_features[j][feature]
+            for key, value in dict_info.items():
+                song_df.loc[song_df['track_id'] == track_id, key] = value
 
     #FILTERING
     num_false = settings["On"].value_counts().loc[False]
