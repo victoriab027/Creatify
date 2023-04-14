@@ -177,6 +177,7 @@ def find_and_filter(settings, genres_list, sp):
     playlist_features["album"] = []
     playlist_features["track_name"] = []
     playlist_features["track_id"] = []
+    print('here 1')
 
     for i in range(len(track_ids)):  
         #song_df["artist"][i] = tracks[i]["album"]["artists"][0]["name"]
@@ -184,12 +185,12 @@ def find_and_filter(settings, genres_list, sp):
         playlist_features["album"].append(tracks[i]["album"]["name"])
         playlist_features["track_name"].append(tracks[i]["name"])
         playlist_features["track_id"].append(tracks[i]["id"])
-
+    print('here 2')
     song_df["artist"] =  playlist_features["artist"]
     song_df["album"] =  playlist_features["album"]
     song_df["track_name"] =  playlist_features["track_name"]
     song_df["track_id"] =  playlist_features["track_id"]
-
+    print('here 3')
     for i in range(0, len(track_ids), 100):  
         audio_features = sp.audio_features(track_ids[i:i+100])# Batch size of 100 for API requests
         for j in range(len(audio_features)):
@@ -200,29 +201,27 @@ def find_and_filter(settings, genres_list, sp):
                 dict_info[feature] = audio_features[j][feature]
             for key, value in dict_info.items():
                 song_df.loc[song_df['track_id'] == track_id, key] = value
-
+    print('here 4')
     #FILTERING
-    num_false = settings["On"].value_counts().loc[False]
-    if num_false == 5:
-      song_df = song_df.head(50)
-    else:
-      for index, setting in settings.iterrows():
-          if setting["On"]:
-              level = int(setting["Level"])/50 
-              var = 0.1
-              mean_1 = 0.5
-              mean_2 = song_df[setting["Name"]].mean()
-              if setting["Name"] == "tempo":
-                  mean_1 = 90 # kinda just guessing on this one
-                  var = song_df[setting["Name"]].var()
-                  song_df_1 = song_df[(song_df[setting["Name"]] >= level*mean_1-3*var) & (song_df[setting["Name"]] <= level*mean_1+3*var)]
-                  song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-3*var) & (song_df[setting["Name"]] <= level*mean_2+3*var)]
-              else:
-                song_df_1 = song_df[(song_df[setting["Name"]] >= level*mean_1-1.5*var) & (song_df[setting["Name"]] <= level*mean_1+1.5*var)]
-                song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-1.5*var) & (song_df[setting["Name"]] <= level*mean_2+1.5*var)]
-              song_df =  pd.concat([song_df_1, song_df_2], ignore_index = True)
-      song_df.drop_duplicates(keep='first', inplace =  True)
-      print(len(song_df))
+    print('here 5')
+    for index, setting in settings.iterrows():
+        if setting["On"]:
+            level = int(setting["Level"])/50 
+            var = 0.1
+            mean_1 = 0.5
+            mean_2 = song_df[setting["Name"]].mean()
+            if setting["Name"] == "tempo":
+                mean_1 = 90 # kinda just guessing on this one
+                var = song_df[setting["Name"]].var()
+                song_df_1 = song_df[(song_df[setting["Name"]] >= level*mean_1-3*var) & (song_df[setting["Name"]] <= level*mean_1+3*var)]
+                song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-3*var) & (song_df[setting["Name"]] <= level*mean_2+3*var)]
+            else:
+              song_df_1 = song_df[(song_df[setting["Name"]] >= level*mean_1-1.5*var) & (song_df[setting["Name"]] <= level*mean_1+1.5*var)]
+              song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-1.5*var) & (song_df[setting["Name"]] <= level*mean_2+1.5*var)]
+            song_df =  pd.concat([song_df_1, song_df_2], ignore_index = True)
+    song_df.drop_duplicates(keep='first', inplace =  True)
+    print(len(song_df))
+    print('here 226')
     print("found "+str(len(song_df)))
     return song_df
 
