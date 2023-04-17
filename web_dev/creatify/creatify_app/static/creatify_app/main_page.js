@@ -125,7 +125,15 @@ function send_selections() {
     genres.push(button.textContent);
   });
   if (genres.length < 3) {
-    alert('Please select at least three genres.');
+    alert('Please select three genres.');
+    return;
+  }
+  if (genres.length >3){
+    alert('Please only select three genres.');
+    return;
+  }
+  if (checkAllSlidersDisabled()){
+    alert('Please enable at least one slider');
     return;
   }
   const slider_values = [];
@@ -149,6 +157,10 @@ function send_selections() {
   });
   const csrftoken = $("[name=csrfmiddlewaretoken]").val();
   const number_of_songs = $("#goal").val();
+  if (!number_of_songs){
+    alert('Please enter in a number of songs');
+    return;
+  }
   const request = new Request('/results/', {
     method: 'POST',
     headers: {'X-CSRFToken': csrftoken},
@@ -205,4 +217,47 @@ function isNumeric(evt) {
     return false;
   }
   return true;
+}
+
+// don't allow all sliders to be disabled
+function checkAllSlidersDisabledClick() {
+  // Get all the checkboxes
+  const sliders = document.querySelectorAll('.slider-wrapper');
+
+  // Count the number of sliders that are disabled
+  let numDisabled = 0;
+  for (const slider of sliders) {
+    if (slider.classList.contains('greyed-out')) {
+      numDisabled++;
+    }
+  }
+
+  // If all the sliders except the one that was clicked are disabled, show an alert
+  if (numDisabled === sliders.length - 1) {
+    alert("You cannot disable all sliders, please renable at least one slider.");
+  }
+}
+function checkAllSlidersDisabled() {
+  // Get all the checkboxes
+  const sliders = document.querySelectorAll('.slider-wrapper');
+
+  // Count the number of sliders that are disabled
+  let numDisabled = 0;
+  for (const slider of sliders) {
+    if (slider.classList.contains('greyed-out')) {
+      numDisabled++;
+    }
+  }
+
+  // If all the sliders except the one that was clicked are disabled, show an alert
+  if (numDisabled === sliders.length) {
+    console.log(numDisabled);console.log(sliders.length);
+    return true;
+  }
+  
+}
+// Add an event listener to each checkbox
+const sliders = document.querySelectorAll('.custom-checkbox');
+for (const slider of sliders) {
+  slider.addEventListener('click', checkAllSlidersDisabledClick);
 }
