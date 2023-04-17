@@ -112,7 +112,9 @@ def result_view(request):
         print('new name',body['newName'])
         access_token = request.session.get('token').get('access_token')
         sp = Spotify(auth=access_token)
+        print(body['playlistID'])
         sp.playlist_change_details(playlist_id=body['playlistID'],name = body['newName'])
+        return render(request, 'creatify_app/results.html' )
       else:
         genres = body['genres']
         slider_values = body['slider_values']
