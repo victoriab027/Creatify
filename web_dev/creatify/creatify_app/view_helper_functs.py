@@ -79,9 +79,12 @@ def get_top_features(token): # fix so it can take a token instead
   ranges = ['short_term', 'medium_term', 'long_term']
   top_tracks = []
   for sp_range in ranges:
-      results = sp.current_user_top_tracks(time_range=sp_range, limit=50)
-      for i in range(len(results)):
-          top_tracks.append(results['items'][i]['uri'])
+    offset = 0
+    while offset < 27:
+        results = sp.current_user_top_tracks(time_range=sp_range, limit=50, offset = offset)
+        for i in range(len(results)):
+            top_tracks.append(results['items'][i]['uri'])
+        offset += 7
   audio_features = sp.audio_features(top_tracks)
   df = pd.DataFrame(audio_features)
   songs = {'danceability': [df.loc[df['danceability'].idxmin(), 'uri'], df.loc[df['danceability'].idxmax(), 'uri']], 
@@ -201,9 +204,7 @@ def find_and_filter(settings, genres_list, sp):
                 dict_info[feature] = audio_features[j][feature]
             for key, value in dict_info.items():
                 song_df.loc[song_df['track_id'] == track_id, key] = value
-    print('here 4')
     #FILTERING
-    print('here 5')
     for index, setting in settings.iterrows():
         if setting["On"]:
             level = int(setting["Level"])/50 
