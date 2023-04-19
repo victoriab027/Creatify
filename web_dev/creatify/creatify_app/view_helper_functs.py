@@ -99,6 +99,9 @@ def generate_playlist(token,generes_list,settings, goal):
     print('begin of generate playlist')
     settings_df = pd.DataFrame(settings)
     songs = gather_songs(sp,generes_list,settings_df, goal)
+    # ADD ENGLISH CODE RIGHT HERE
+    # REMINDER IT SHOULD ONLY RUN IF THE BAR IS DIABLBBED.
+    # MIGHT BE EASIEST TO JUST PASS IN ANOTHER VAIRABLE THAT'S FALSE IF WE DON'T WANT ENGLISH OR SMTH
     print('gathered songs')
 
     # Shuffle the dataframe 
