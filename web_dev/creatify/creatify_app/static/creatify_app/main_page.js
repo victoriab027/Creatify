@@ -161,6 +161,8 @@ function send_selections() {
     alert('Please enter in a number of songs');
     return;
   }
+  const loadingOverlay = document.getElementById('loading-overlay');
+  loadingOverlay.style.display = 'flex';
   const request = new Request('/results/', {
     method: 'POST',
     headers: {'X-CSRFToken': csrftoken},

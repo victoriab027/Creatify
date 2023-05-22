@@ -12,7 +12,7 @@ import os
 import openai
 from . import credentials
 import random
-
+from langdetect import detect
 ''' 
 
 TO RUN:
@@ -94,11 +94,21 @@ def get_top_features(token): # fix so it can take a token instead
         'tempo': [df.loc[df['tempo'].idxmin(), 'uri'], df.loc[df['tempo'].idxmax(), 'uri']]}
   return songs # this returns the above values in min then max order
 
-def generate_playlist(token,generes_list,settings, goal):
+def generate_playlist(token,generes_list,settings, goal,engOnly):
     sp = spotipy.Spotify(auth=token)
     print('begin of generate playlist')
     settings_df = pd.DataFrame(settings)
     songs = gather_songs(sp,generes_list,settings_df, goal)
+    if engOnly:
+      songs = songs.reset_index(drop=True)
+      to_remove = []
+      for i in range(len(songs)):
+          query_string = f'{songs.iloc[i]["track_name"]} {songs.iloc[i]["artist"]}'
+          detected_language = detect(query_string)
+          if detected_language != 'en':
+              to_remove.append(i)
+      songs = songs.drop(labels=to_remove, axis=0)
+      songs = songs.reset_index(drop=True)
     # ADD ENGLISH CODE RIGHT HERE
     # REMINDER IT SHOULD ONLY RUN IF THE BAR IS DIABLBBED.
     # MIGHT BE EASIEST TO JUST PASS IN ANOTHER VAIRABLE THAT'S FALSE IF WE DON'T WANT ENGLISH OR SMTH
@@ -125,12 +135,17 @@ def generate_playlist(token,generes_list,settings, goal):
             ]
         ) 
     reccomendation = output['choices'][0]['message']['content']
-    print(reccomendation)
-    #print('reccc',reccomendation)
+    print('reccomendation:',reccomendation)
     bullet_points = reccomendation.split('\n\n')[0].split('\n')[0:]
     playlist_titles = [point[2:] for point in bullet_points]
     playlist_titles = playlist_titles[1:]
-    print(playlist_titles)
+    if playlist_titles == []: # chat gpt gave us an extra line ugh
+      bullet_points = reccomendation.split('\n\n\n')[0].split('\n')[0:]
+      playlist_titles = [point[2:] for point in bullet_points]
+      playlist_titles = playlist_titles[1:]
+    print('Playlist titles:',playlist_titles)
+    if playlist_titles[0] =='':
+      playlist_titles = playlist_titles[1:]
     best_title = playlist_titles[0]
 
     username = sp.current_user()['id']
@@ -142,7 +157,7 @@ def generate_playlist(token,generes_list,settings, goal):
     scope = 'playlist-modify-public'
 
     tracks = songs["track_id"]
-
+    print(playlist_titles)
     sp.user_playlist_add_tracks(username, playlist_id=playlist_id, tracks=tracks)
     return playlist_titles, playlist_id
 
@@ -168,8 +183,7 @@ def find_and_filter(settings, genres_list, sp):
     track_ids = []
     for track in tracks:
         track_ids.append(track['uri'])
-    print("got reccomendations")
-    print(len(tracks))
+    print(f"got {len(tracks)} reccomendations")
 
     song_features_list = ["artist","album","track_name",  "track_id","danceability","energy","key","loudness","mode", "speechiness","instrumentalness","liveness","valence","tempo", "duration_ms","time_signature"]
     song_df = pd.DataFrame(columns = song_features_list, index=range(len(track_ids)))
@@ -183,7 +197,6 @@ def find_and_filter(settings, genres_list, sp):
     playlist_features["album"] = []
     playlist_features["track_name"] = []
     playlist_features["track_id"] = []
-    print('here 1')
 
     for i in range(len(track_ids)):  
         #song_df["artist"][i] = tracks[i]["album"]["artists"][0]["name"]
@@ -191,12 +204,10 @@ def find_and_filter(settings, genres_list, sp):
         playlist_features["album"].append(tracks[i]["album"]["name"])
         playlist_features["track_name"].append(tracks[i]["name"])
         playlist_features["track_id"].append(tracks[i]["id"])
-    print('here 2')
     song_df["artist"] =  playlist_features["artist"]
     song_df["album"] =  playlist_features["album"]
     song_df["track_name"] =  playlist_features["track_name"]
     song_df["track_id"] =  playlist_features["track_id"]
-    print('here 3')
     for i in range(0, len(track_ids), 100):  
         audio_features = sp.audio_features(track_ids[i:i+100])# Batch size of 100 for API requests
         for j in range(len(audio_features)):
@@ -224,9 +235,7 @@ def find_and_filter(settings, genres_list, sp):
               song_df_2 = song_df[(song_df[setting["Name"]] >= level*mean_2-1.5*var) & (song_df[setting["Name"]] <= level*mean_2+1.5*var)]
             song_df =  pd.concat([song_df_1, song_df_2], ignore_index = True)
     song_df.drop_duplicates(keep='first', inplace =  True)
-    print(len(song_df))
-    print('here 226')
-    print("found "+str(len(song_df)))
+    print("found "+str(len(song_df))+'songs')
     return song_df
 
 def gather_songs(sp, generes_list, settings_df, goal):

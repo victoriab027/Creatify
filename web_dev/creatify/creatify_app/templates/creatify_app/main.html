@@ -8,46 +8,140 @@
   {% endblock %}
 
 {% block content %}
-<button type="button" class="collapsible"><h2>Genere Selector</h2></button>
-<div class="content" style="max-height: 965px;">
-  <input type="text" id="genre-filter" placeholder="Enter a genre">
-  <table id ="genre-table">
-    <tr>
-      {% for genre in genres %}
-        <td><button class="unclicked" data-genre="{{ genre }}" onclick='toggleButtonClass(this)'>{{ genre }}</button></td>
-        {% if forloop.counter|divisibleby:12 %}
-          </tr><tr>
-        {% endif %}
-      {% endfor %}
-    </tr>
-  </table>
+<!-- loading content -->
+<div id="loading-overlay">
+  <div class="loading-text">Loading Creatify...</div>
+  <br>
+  <br>
+  <div class="loader"></div>
 </div>
+
+<h1>Creatify</h1>
+
+<h5>Welcome to Creatify! Here, you'll create a playlist of randomly generated songs to help find music of your 
+  taste you've never heard before. Follow the steps below to craft your playlist</h5>
+
+<h2>1. Select Genres for Your Playlist</h2>
+    <br>
+    <div class="search">
+
+        <form class="form">
+          <button>
+              <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
+                  <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+          </button>
+          <input id="genre-filter" class="input" placeholder="Search for a genre" type="text">
+          <button class="reset" type="reset">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+          </button>
+      </form>
+
+
+    </div>
+    <br>
+<div id="genre-table-container">
+    <table id="genre-table">
+      <tr>
+        {% for genre in genres %}
+        <td><button class="btn" data-genre="{{ genre }}">{{ genre }}</button></td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+  
+  <br>
+<button id="new-btn" class="collpase_btn">
+    <span>Collapse Unused Genres</span>
+    <svg viewBox="0 0 10 13" height="20px" width="10px">
+    <path d="M5,1 L5,20"></path>
+    <polyline points="1 12 5 1 9 12"></polyline>
+    </svg>
+</button>
+<br>
+<h2>2. Tune the Audio Features</h2>
+<h5>Each feature comes with a personalized song telling you what high and low values of that are feature are<br>
+Choose to either enable this feature on your custom playlist or disable and it will not be considered<br>
+Your highest and lowest recent song of each feature are linked below</h5>
+
+
 {% for slider in sliders %}
-    <h3 class="slider">{{slider.name}}</h3>
-        <div class="tooltip"><input type="checkbox" class="custom-checkbox" id="{{slider.name}}" checked> 
-          <span class="tooltiptext">Enable/Disable {{slider.name}}</span>
+    <h3 class="slider">{{slider.Name}}</h3>
+
+     <!-- New Toggle Button -->
+     <div class = "center">
+        <div class="slider-description" id="desc-{{slider.Name}}">{{slider.desc}}
         </div>
-    <div class="slider-description" id="desc-{{slider.name}}" style="display:none;">{{slider.desc}}</div>
+        <label class="switch">
+          <input type="checkbox" checked id="{{slider.Name}}">
+          <span class="toggle-slider"></span>
+          <span class="toggle-text on">ENABLED</span>
+          <span class="toggle-text off">DISABLED</span>
+        </label>
+    </div>
+    <br>
+      <div class ="left">
+          <iframe style="border-radius:12px; margin: 10px;" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class = "right">
+          <iframe style="border-radius:12px; margin: 10px;" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <br>
+        <br><br><br><br><br><br><br><br>
+
         {% comment %} <div class='subtext'>Learn More</div>{% endcomment %}<br>
-        <div class="slider-wrapper" id="slider-{{slider.name}}" >
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_low}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{slider.track_high}}?utm_source=generator&theme=0"  height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><span class="medium" id="medium-{{slider.name}}">{{slider.medium}}</span>
+        <div class="slider-wrapper" id="slider-{{slider.Name}}" >
             <div class="labels">
-              <span class="low" id="low-{{slider.name}}">{{slider.low}}</span>
-              <span class="high" id="high-{{slider.name}}">{{slider.high}}</span>
+              <span class="low" id="low-{{slider.Name}}">{{slider.low}}</span>
+              <span class="medium" id="medium-{{slider.Name}}">{{slider.medium}}</span>
+              <span class="high" id="high-{{slider.Name}}">{{slider.high}}</span>
             </div>
-            <input type="range" min="1" max="3" value="2" class="slider" id="slider-input-{{slider.name}}">
-            <div class="slider-dots">
-                <span id="1 {{slider.name}}" class="dot"></span>
-                <span id="2 {{slider.name}}" class="dot"></span>
-                <span id="3 {{slider.name}}" class="dot"></span>
+            <div class = "center">
+                <input type="range" min="0" max="100" value="50" class="slider" id="slider-input-{{slider.Name}}"/>
             </div>
+                       
         </div>
 {% endfor %}
+<br>
+<br>
+<br>
 
 
+<h2>3. Choose the Minimum Number of Songs in the Playlist</h2>
+<h5>You must have at least 5 and at most 50</h5>
 
-<div id="center-container"><button id="generate_bt">Generate Playlist</button></div>
+<p class="input-container">
+  <input class="input-field" id="goal" name="goal" placeholder="Enter a number" type="number" min="5" max="50">
+  <label for="goal" class="input-label"></label>
+</p>
+
+<h2>4. Songs Not in English</h2>
+<h5>Sometimes spotify suggests songs that are not in English. We default to including these but if you would like to 
+  turn that of, click disable.
+</h5>
+<div class = "langage_toggle">
+  <label class="switch">
+    <input type="checkbox" checked >
+    <span class="toggle-slider"id="langeage"></span>
+    <span class="toggle-text on">ENABLED</span>
+    <span class="toggle-text off">DISABLED</span>
+  </label>
+</div>
+<br>
+<br>
+<br>
+
+<div class = "center">
+  <button id = "iloveowen" class="learn-more">
+    <span class="circle" aria-hidden="true">
+    <span class="icon arrow"></span>
+    </span>
+    <span class="button-text">Generate Playlist</span>
+  </button>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'creatify_app/main_page.js' %}"></script>

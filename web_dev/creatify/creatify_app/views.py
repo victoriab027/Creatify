@@ -10,46 +10,6 @@ import pandas as pd
 import requests
 from . import view_helper_functs
 
-# def vic_view(request): #old, no longer used
-#     sliders = [
-#   {
-#     "name": "Danceability",
-#     "desc": "Danceability measures how suitable for dancing and is based on musical elements such as tempo, rhythm stability, beat and regularity.",
-#     "low":"Low",
-#     "medium":"Medium",
-#     "high":"High"
-#   },
-#   {
-#     "name": "Energy",
-#     "desc": "Energy measures the intensity and activity based on loudness, timbre, and other factors.",
-#     "low":"Calm",
-#     "medium":"Average",
-#     "high":"Energetic"
-#   },
-#   {
-#     "name": "Valence",
-#     "desc": "Valence is the positivity of the song i.e. happier songs have higher valence",
-#     "low":"Meloncholic",
-#     "medium":"Average",
-#     "high":"Cheery"
-#   },
-#   {
-#     "name": "Instrumentalness",
-#     "desc": "Instrumentalness measures how much of the song is predominated with vocals or instruments",
-#     "low":"Vocal",
-#     "medium":"Average",
-#     "high":"Instrumental"
-#   },
-#   {
-#     "name": "Tempo",
-#     "desc": "The speed of the track in beats per minute",
-#     "low":"Slower",
-#     "medium":"Average",
-#     "high":"Faster"
-#   }
-# ]
-#     genres = ['afrobeat', 'alt-Rock', 'alternative', 'ambient', 'anime', 'black-Metal', 'bluegrass', 'blues', 'bossanova', 'brazil', 'breakbeat', 'british', 'cantopop', 'chicago-House', 'children', 'chill', 'classical', 'club', 'comedy', 'country', 'dance', 'dancehall', 'death-Metal', 'deep-House', 'detroit-Techno', 'disco', 'disney', 'drum-and-Bass', 'dub', 'dubstep', 'edm', 'electro', 'electronic', 'emo', 'folk', 'forro', 'french', 'funk', 'garage', 'german', 'gospel', 'goth', 'grindcore', 'groove', 'grunge', 'guitar', 'happy', 'hard-Rock', 'hardcore', 'hardstyle', 'heavy-Metal', 'hip-Hop', 'holidays', 'honky-Tonk', 'house', 'idm', 'indian', 'indie', 'indie-Pop', 'industrial', 'iranian', 'j-Dance', 'j-Idol', 'j-Pop', 'j-Rock', 'jazz', 'k-Pop', 'kids', 'latin', 'latino', 'malay', 'mandopop', 'metal', 'metal-Misc', 'metalcore', 'minimal-Techno', 'movies', 'mpb', 'new-Age', 'new-Release', 'opera', 'pagode', 'party', 'philippines-Opm', 'piano', 'pop', 'pop-Film', 'post-Dubstep', 'power-Pop', 'progressive-House', 'psych-Rock', 'punk', 'punk-Rock', 'R-N-B', 'rainy-Day', 'reggae', 'reggaeton', 'road-trip', 'rock', 'rock-n-Roll', 'rockabilly', 'romance', 'sad', 'salsa', 'samba', 'sertanejo', 'show-Tunes', 'singer-Songwriter', 'ska', 'sleep', 'songwriter', 'soul', 'soundtracks', 'spanish', 'study', 'summer', 'swedish', 'synth-Pop', 'tango', 'techno', 'trance', 'trip-Hop', 'turkish', 'work-Out', 'world-Music']
-#     return render(request, 'creatify_app/victoria.html', {'genres':genres, 'sliders':sliders})
 def baserender(request): #add in top features function
   access_token = request.session.get('token').get('access_token')
   songs_dict = view_helper_functs.get_top_features(access_token)
@@ -102,7 +62,7 @@ def baserender(request): #add in top features function
   }
 ]
   genres = ['afrobeat', 'alt-Rock', 'alternative', 'ambient', 'anime', 'black-Metal', 'bluegrass', 'blues', 'bossanova', 'brazil', 'breakbeat', 'british', 'cantopop', 'chicago-House', 'children', 'chill', 'classical', 'club', 'comedy', 'country', 'dance', 'dancehall', 'death-Metal', 'deep-House', 'detroit-Techno', 'disco', 'disney', 'drum-and-Bass', 'dub', 'dubstep', 'edm', 'electro', 'electronic', 'emo', 'folk', 'forro', 'french', 'funk', 'garage', 'german', 'gospel', 'goth', 'grindcore', 'groove', 'grunge', 'guitar', 'happy', 'hard-Rock', 'hardcore', 'hardstyle', 'heavy-Metal', 'hip-Hop', 'holidays', 'honky-Tonk', 'house', 'idm', 'indian', 'indie', 'indie-Pop', 'industrial', 'iranian', 'j-Dance', 'j-Idol', 'j-Pop', 'j-Rock', 'jazz', 'k-Pop', 'kids', 'latin', 'latino', 'malay', 'mandopop', 'metal', 'metal-Misc', 'metalcore', 'minimal-Techno', 'movies', 'mpb', 'new-Age', 'new-Release', 'opera', 'pagode', 'party', 'philippines-Opm', 'piano', 'pop', 'pop-Film', 'post-Dubstep', 'power-Pop', 'progressive-House', 'psych-Rock', 'punk', 'punk-Rock', 'R-N-B', 'rainy-Day', 'reggae', 'reggaeton', 'road-trip', 'rock', 'rock-n-Roll', 'rockabilly', 'romance', 'sad', 'salsa', 'samba', 'sertanejo', 'show-Tunes', 'singer-Songwriter', 'ska', 'sleep', 'songwriter', 'soul', 'soundtracks', 'spanish', 'study', 'summer', 'swedish', 'synth-Pop', 'tango', 'techno', 'trance', 'trip-Hop', 'turkish', 'work-Out', 'world-Music']
-  return render(request, 'creatify_app/victoria.html', {'genres':genres, 'sliders':sliders})
+  return render(request, 'creatify_app/main.html', {'genres':genres, 'sliders':sliders})
 # results page view
 def result_view(request):
     if request.method == 'POST':
@@ -113,7 +73,12 @@ def result_view(request):
         access_token = request.session.get('token').get('access_token')
         sp = Spotify(auth=access_token)
         print(body['playlistID'])
+        request.session['playlist_name'] = body['newName']
         sp.playlist_change_details(playlist_id=body['playlistID'],name = body['newName'])
+        playlist_titles = request.session.get('playlist_titles')
+
+        playlist_titles.insert(0, playlist_titles.pop(playlist_titles.index(request.session['playlist_name'])))
+        request.session['playlist_titles'] = playlist_titles
         return render(request, 'creatify_app/results.html' )
       else:
         genres = body['genres']
@@ -126,8 +91,12 @@ def result_view(request):
         genres = [word.capitalize() for word in genres]
         request.session['selected_genres'] = genres
         access_token = request.session.get('token').get('access_token')
-        playlist_titles, playlist_id = view_helper_functs.generate_playlist(access_token,genres,slider_values,goal )
+        englishOnly = False # body['englishOnly']
+        print(englishOnly)
+        playlist_titles, playlist_id = view_helper_functs.generate_playlist(access_token,genres,slider_values,goal,englishOnly )
+        request.session['title_index'] = 0
         request.session['playlist_titles'] = playlist_titles
+        request.session['playlist_name'] = playlist_titles[0]
         request.session['playlist_id'] = playlist_id
         # below are the names for the slider values not the names themselves
         slider_values = view_helper_functs.convert_slider_vals(slider_values)
@@ -138,8 +107,9 @@ def result_view(request):
       selected_genres = request.session.get('selected_genres')
       slider_values = request.session.get('slider_values')
       playlist_titles = request.session.get('playlist_titles')
+      playlist_name = request.session.get('playlist_name')
       playlist_id = request.session.get('playlist_id')
-      context = {'selected_genres': selected_genres, 'slider_values': slider_values, 'playlist_titles': playlist_titles, 'playlist_id':playlist_id, 'showbanner': True}
+      context = {'selected_genres': selected_genres, 'slider_values': slider_values, 'playlist_titles': playlist_titles, 'playlist_name':playlist_name, 'playlist_id':playlist_id, 'showbanner': False}
       print(context)
       return render(request, 'creatify_app/results.html', context)
 # get spotify authorization

@@ -1,0 +1,29 @@
+{% extends 'creatify_app/base.html' %}
+{% block title %}Creatify{% endblock %}
+
+{% block styles %}
+  {% csrf_token %}
+  {% load static %}
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'creatify_app/favicon.ico' %}">
+  <link rel="stylesheet" href="{% static 'creatify_app/login_page.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="intro">
+    <h1>Welcome to Creatify</h1>
+    <h2>Recommend Less. Discover More.</h2>
+    <br>
+    <br>
+    <br>
+    <a id="login-button" class="big-btn" href="{% url 'creatify_app:auth' %}">Log in with Spotify</a>
+    <div class="notes-container">
+      {% for i in '12345678' %}
+        <div class="note note{{ i }}"></div>
+      {% endfor %}
+    </div>
+  </div> 
+
+
+  <script src="{% static 'creatify_app/login_page.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
