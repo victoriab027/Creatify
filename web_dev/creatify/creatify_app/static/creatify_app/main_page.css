@@ -962,3 +962,57 @@ input:not(:placeholder-shown) ~ .reset {
 .langage_toggle{
   margin-left: 18px;
 }
+
+/* 
+ COLLAPSE BUTTON
+ */
+
+ .collpase_btn {
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  border: none;
+  background: none;
+  user-select: none;
+ }
+ 
+ 
+ .collpase_btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #16815f;
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+ }
+ .collpase_btn:hover::before {
+  width: 300px;
+  transition: all 0.3s ease;
+ }
+ 
+ .collpase_btn span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #204931;
+  user-select: none;
+ }
+ 
+ .collpase_btn svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #204931;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+ }
